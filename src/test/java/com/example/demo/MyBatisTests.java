@@ -4,6 +4,9 @@ import com.example.demo.entity.SysUser;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.SysUserMapper;
 import com.example.demo.mapper.UserMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,9 +42,13 @@ class MyBatisTests {
 //        List<User> userList = userMapper.queryAll();
 //        userList.forEach(e -> System.out.println(e));
 
+        List<SysUser> sysUserList;
         SysUser sysUser = new SysUser();
-        List<SysUser> sysUserList = sysUserMapper.selectUserList(sysUser);
-        sysUserList.forEach(e -> System.out.println(e));
+        Page<SysUser> pageInfo =
+                PageHelper
+                        .startPage(2,1)
+                        .doSelectPage(() -> sysUserMapper.selectUserList(sysUser));
+        System.out.println(pageInfo.toString());
     }
 
 }
