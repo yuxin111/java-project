@@ -1,6 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.entity.SysUser;
 import com.example.demo.entity.User;
+import com.example.demo.mapper.SysUserMapper;
 import com.example.demo.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +31,17 @@ class MyBatisTests {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    SysUserMapper sysUserMapper;
+
     @Test
     public void toTest(){
-        List<User> userList = userMapper.queryAll();
-        userList.forEach(e -> System.out.println(e));
+//        List<User> userList = userMapper.queryAll();
+//        userList.forEach(e -> System.out.println(e));
+
+        SysUser sysUser = new SysUser();
+        List<SysUser> sysUserList = sysUserMapper.selectUserList(sysUser);
+        sysUserList.forEach(e -> System.out.println(e));
     }
 
 }
