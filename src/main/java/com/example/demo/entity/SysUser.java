@@ -1,6 +1,9 @@
 package com.example.demo.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 /**
  * 用户信息表
@@ -8,8 +11,11 @@ import lombok.Data;
  * @author YuXin
  */
 @Data
+@EqualsAndHashCode(callSuper=true)
 public class SysUser extends BaseEntity {
-    private Long id;
+    private Long userId;
     private String loginName;
     private String password;
+
+    private List<SysRole> roles;
 }

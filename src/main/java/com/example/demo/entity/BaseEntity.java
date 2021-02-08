@@ -1,8 +1,11 @@
 package com.example.demo.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class BaseEntity implements Serializable {
     private String createBy;
 

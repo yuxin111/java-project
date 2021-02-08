@@ -1,6 +1,9 @@
 package com.example.demo.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 /**
  * 用户角色表
@@ -8,7 +11,12 @@ import lombok.Data;
  * @author YuXin
  */
 @Data
+@EqualsAndHashCode(callSuper=true)
 public class SysRole extends BaseEntity {
-    private Long id;
+    private Long roleId;
     private String roleName;
+    // 角色状态（0停用，1正常）
+    private String status;
+
+    private List<SysMenu> menus;
 }

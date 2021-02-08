@@ -46,7 +46,7 @@ class MyBatisTests {
         SysUser sysUser = new SysUser();
         Page<SysUser> pageInfo =
                 PageHelper
-                        .startPage(2,1)
+                        .startPage(1,1)
                         .doSelectPage(() -> sysUserMapper.selectUserList(sysUser));
         System.out.println(pageInfo.toString());
     }
