@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.shiro.mapper.SysTokenMapper">
+
+    <resultMap id="SysTokenResult" type="com.example.demo.shiro.entity.SysToken">
+        <id property="userId" column="user_id"></id>
+        <result property="token" column="token"></result>
+        <result property="expireTime" column="expire_time"></result>
+        <result property="updateTime" column="update_time"></result>
+    </resultMap>
+
+    <sql id="selectTokenVo">
+        select
+            t.user_id,t.token,t.expire_time,t.update_time
+        from sys_token t
+    </sql>
+
+    <select id="selectTokenByUserId" parameterType="Long" resultMap="SysTokenResult">
+        <include refid="selectTokenVo"/>
+        WHERE t.user_id = #{userId}
+    </select>
+
+</mapper>

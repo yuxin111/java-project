@@ -1,6 +1,7 @@
-package com.example.demo.mapper;
+package com.example.demo.shiro.mapper;
 
-import com.example.demo.entity.SysUser;
+import com.example.demo.shiro.entity.SysToken;
+import com.example.demo.shiro.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,13 @@ public interface SysUserMapper {
      * @return 用户信息列表
      */
     public List<SysUser> selectUserList(SysUser sysUser);
+
+    /**
+     * 用户信息 <- 用户名
+     * @param loginName 登录名
+     * @return 用户信息
+     */
+    public SysUser selectUserByLoginName(String loginName);
+
+
 }

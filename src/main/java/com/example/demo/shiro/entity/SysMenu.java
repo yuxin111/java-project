@@ -1,9 +1,7 @@
-package com.example.demo.entity;
+package com.example.demo.shiro.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.List;
 
 /**
  * 菜单权限表
