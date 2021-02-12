@@ -32,7 +32,7 @@ public class ShiroServiceImpl implements IShiroService {
 
     @Override
     public Map<String, Object> createToken(Long userId) {
-        Map<String,Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         String token = TokenGenerator.generateValue();
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expireTime = now.plusHours(EXPIRE);
@@ -42,16 +42,12 @@ public class ShiroServiceImpl implements IShiroService {
         if (tokenEntity == null) {
             tokenEntity = new SysToken();
             tokenEntity.setUserId(userId);
-            //保存token
-            tokenEntity.setToken(token);
-            tokenEntity.setUpdateTime(now);
-            tokenEntity.setExpireTime(expireTime);
-        } else {
-            //更新token
-            tokenEntity.setToken(token);
-            tokenEntity.setUpdateTime(now);
-            tokenEntity.setExpireTime(expireTime);
         }
+        tokenEntity.setToken(token);
+        tokenEntity.setUpdateTime(now);
+        tokenEntity.setExpireTime(expireTime);
+
+        sysTokenMapper.insertToken(tokenEntity);
 
         result.put("token", token);
         result.put("expire", expireTime);

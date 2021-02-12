@@ -1,6 +1,5 @@
 package com.example.demo.shiro.service;
 
-import com.example.demo.entity.User;
 import com.example.demo.shiro.entity.SysToken;
 import com.example.demo.shiro.entity.SysUser;
 

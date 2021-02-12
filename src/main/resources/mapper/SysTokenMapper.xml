@@ -22,4 +22,23 @@
         WHERE t.user_id = #{userId}
     </select>
 
+    <insert id="insertToken" parameterType="com.example.demo.shiro.entity.SysToken">
+        insert into sys_token(
+            <if test="userId != null and userId != ''">user_id,</if>
+            <if test="token != null and token != ''">token,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="expireTime != null">expire_time</if>
+        )values(
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="token != null and token != ''">#{token},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="expireTime != null">#{expireTime}</if>
+        )
+        ON DUPLICATE KEY UPDATE
+        <if test="userId != null and userId != ''">user_id = #{userId},</if>
+        <if test="token != null and token != ''">token = #{token},</if>
+        <if test="updateTime != null">update_time = #{updateTime},</if>
+        <if test="expireTime != null">expire_time = #{expireTime}</if>
+    </insert>
+
 </mapper>

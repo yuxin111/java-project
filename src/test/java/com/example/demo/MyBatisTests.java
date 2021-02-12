@@ -4,10 +4,6 @@ import com.example.demo.shiro.entity.SysToken;
 import com.example.demo.shiro.entity.SysUser;
 import com.example.demo.shiro.mapper.SysTokenMapper;
 import com.example.demo.shiro.mapper.SysUserMapper;
-import com.example.demo.mapper.UserMapper;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,9 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootTest
 class MyBatisTests {
@@ -33,9 +27,6 @@ class MyBatisTests {
 
         connection.close();
     }
-
-    @Autowired
-    UserMapper userMapper;
 
     @Autowired
     SysUserMapper sysUserMapper;
@@ -66,13 +57,14 @@ class MyBatisTests {
 //        SysToken token = sysTokenMapper.selectTokenByUserId(1L);
 //        System.out.println(token.toString());
 
-//        LocalDateTime now = LocalDateTime.now();
-//        LocalDateTime expireTime = now.plusHours(24);
-//        SysToken sysToken = new SysToken();
-//        sysToken.setUserId(2L);
-//        sysToken.setToken("fc2d8ea6091bc551fb7a9016ce2f7acd");
-//        sysToken.setUpdateTime(now);
-//        sysToken.setExpireTime(expireTime);
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expireTime = now.plusHours(24);
+        SysToken sysToken = new SysToken();
+        sysToken.setUserId(2L);
+        sysToken.setToken("fc2d8ea6091bc551fb7a9016ce2f7acd");
+        sysToken.setUpdateTime(now);
+        sysToken.setExpireTime(expireTime);
+        sysTokenMapper.insertToken(sysToken);
 
     }
 

@@ -2,7 +2,6 @@ package com.example.demo.shiro.mapper;
 
 import com.example.demo.shiro.entity.SysToken;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Mapper
@@ -15,4 +14,11 @@ public interface SysTokenMapper{
      * @return token信息
      */
     public SysToken selectTokenByUserId(Long userId);
+
+    /**
+     * 新增token
+     * @param sysToken token
+     * @return
+     */
+    public int insertToken(SysToken sysToken);
 }
