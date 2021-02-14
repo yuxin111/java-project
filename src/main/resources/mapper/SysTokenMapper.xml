@@ -22,6 +22,11 @@
         WHERE t.user_id = #{userId}
     </select>
 
+    <select id="selectTokenByToken" parameterType="String" resultMap="SysTokenResult">
+        <include refid="selectTokenVo"/>
+        WHERE t.token = #{token}
+    </select>
+
     <insert id="insertToken" parameterType="com.example.demo.shiro.entity.SysToken">
         insert into sys_token(
             <if test="userId != null and userId != ''">user_id,</if>

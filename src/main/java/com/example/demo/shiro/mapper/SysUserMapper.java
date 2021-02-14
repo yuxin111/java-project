@@ -24,5 +24,12 @@ public interface SysUserMapper {
      */
     public SysUser selectUserByLoginName(String loginName);
 
+    /**
+     * 用户信息 <- 用户id
+     * @param userId 用户id
+     * @return
+     */
+    public SysUser selectUserByUserId(Long userId);
+
 
 }

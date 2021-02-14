@@ -31,6 +31,11 @@ public class ShiroServiceImpl implements IShiroService {
     }
 
     @Override
+    public SysUser selectUserByUserId(Long userId) {
+        return sysUserMapper.selectUserByUserId(userId);
+    }
+
+    @Override
     public Map<String, Object> createToken(Long userId) {
         Map<String, Object> result = new HashMap<>();
         String token = TokenGenerator.generateValue();
@@ -52,5 +57,10 @@ public class ShiroServiceImpl implements IShiroService {
         result.put("token", token);
         result.put("expire", expireTime);
         return result;
+    }
+
+    @Override
+    public SysToken selectTokenByToken(String token) {
+        return sysTokenMapper.selectTokenByToken(token);
     }
 }

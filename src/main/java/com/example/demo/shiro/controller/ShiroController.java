@@ -17,23 +17,34 @@ public class ShiroController {
     IShiroService shiroService;
 
     @GetMapping("/shiro/login")
-    public Map<String,Object> login(String username, String password){
+    public Map<String, Object> login(String username, String password) {
 
-        Map<String,Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         SysUser sysUser = shiroService.selectUserByLoginName(username);
 
-        if(sysUser == null){
-            result.put("status","404");
-            result.put("msg","账号不存在");
-        }else if(!sysUser.getPassword().equals(password)){
-            result.put("status","400");
-            result.put("msg","密码错误");
-        }else{
+        if (sysUser == null) {
+            result.put("status", "404");
+            result.put("msg", "账号不存在");
+        } else if (!sysUser.getPassword().equals(password)) {
+            result.put("status", "400");
+            result.put("msg", "密码错误");
+        } else {
             result = shiroService.createToken(sysUser.getUserId());
-            result.put("status","200");
-            result.put("msg","登录成功");
+            result.put("status", "200");
+            result.put("msg", "登录成功");
         }
 
         return result;
+    }
+
+    @GetMapping("/shiro/test")
+    public Map<String, Object> test() {
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("status", "200");
+        result.put("msg", "hello");
+
+        return result;
+
     }
 }

@@ -40,5 +40,10 @@
         WHERE u.login_name = #{loginName}
     </select>
 
+    <select id="selectUserByUserId" parameterType="Long" resultMap="SysUserResult">
+        <include refid="selectUserVo"/>
+        WHERE u.user_id = #{userId}
+    </select>
+
 
 </mapper>

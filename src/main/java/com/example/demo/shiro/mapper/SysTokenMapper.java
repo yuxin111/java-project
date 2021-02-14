@@ -16,9 +16,16 @@ public interface SysTokenMapper{
     public SysToken selectTokenByUserId(Long userId);
 
     /**
-     * 新增token
+     * 插入token
      * @param sysToken token
      * @return
      */
     public int insertToken(SysToken sysToken);
+
+    /**
+     * token信息 <- token
+     * @param token token字符串
+     * @return
+     */
+    public SysToken selectTokenByToken(String token);
 }
