@@ -45,7 +45,6 @@ public class AuthRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println(authenticationToken.getCredentials());
         //获取token，既前端传入的token
         String accessToken = (String) authenticationToken.getPrincipal();
 

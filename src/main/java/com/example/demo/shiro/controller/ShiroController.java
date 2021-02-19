@@ -3,8 +3,9 @@ package com.example.demo.shiro.controller;
 import com.example.demo.shiro.entity.SysUser;
 import com.example.demo.shiro.service.IShiroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ public class ShiroController {
     @Autowired
     IShiroService shiroService;
 
-    @GetMapping("/shiro/login")
+    @PostMapping("/shiro/login")
     public Map<String, Object> login(String username, String password) {
 
         Map<String, Object> result = new HashMap<>();

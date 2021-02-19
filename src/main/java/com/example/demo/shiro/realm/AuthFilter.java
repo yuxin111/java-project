@@ -1,12 +1,14 @@
 package com.example.demo.shiro.realm;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.shiro.util.HttpContextUtil;
 import com.example.demo.shiro.util.TokenUtil;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -24,6 +26,14 @@ public class AuthFilter extends AuthenticatingFilter {
         String token = TokenUtil.getRequestToken((HttpServletRequest) servletRequest);
         return new AuthToken(token);
     }
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
@@ -33,7 +43,7 @@ public class AuthFilter extends AuthenticatingFilter {
             HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
             httpResponse.setContentType("application/json;charset=utf-8");
             httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-//            httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
+            httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
             httpResponse.setCharacterEncoding("UTF-8");
             Map<String, Object> result = new HashMap<>();
             result.put("status", 403);
