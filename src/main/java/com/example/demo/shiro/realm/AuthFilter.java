@@ -26,13 +26,13 @@ public class AuthFilter extends AuthenticatingFilter {
         String token = TokenUtil.getRequestToken((HttpServletRequest) servletRequest);
         return new AuthToken(token);
     }
-    @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+//        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 
     @Override
