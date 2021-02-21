@@ -1,10 +1,13 @@
 package com.example.demo.shiro.realm;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.core.entity.ResultBody;
 import com.example.demo.shiro.util.HttpContextUtil;
 import com.example.demo.shiro.util.TokenUtil;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -45,10 +48,9 @@ public class AuthFilter extends AuthenticatingFilter {
             httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
             httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
             httpResponse.setCharacterEncoding("UTF-8");
-            Map<String, Object> result = new HashMap<>();
-            result.put("status", 403);
-            result.put("msg", "请先登录");
-            String json = JSONObject.toJSONString(result);
+            ResultBody resultBody = new ResultBody(403);
+            resultBody.setMessage("请先登录");
+            String json = JSONObject.toJSONString(resultBody);
             httpResponse.getWriter().print(json);
             return false;
         }
@@ -60,15 +62,20 @@ public class AuthFilter extends AuthenticatingFilter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.setContentType("application/json;charset=utf-8");
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-//        httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
+        httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
         httpResponse.setCharacterEncoding("UTF-8");
         try {
             //处理登录失败的异常
             Throwable throwable = e.getCause() == null ? e : e.getCause();
-            Map<String, Object> result = new HashMap<>();
-            result.put("status", 403);
-            result.put("msg", "登录凭证已失效，请重新登录");
-            String json = JSONObject.toJSONString(result);
+            ResultBody resultBody = new ResultBody(403);
+            if (e instanceof IncorrectCredentialsException) {
+                resultBody.setMessage("登录凭证已失效，请重新登录");
+            } else if (e instanceof UnknownAccountException) {
+                resultBody.setMessage("登录用户不存在，请重新选择用户");
+            }else{
+                resultBody.setMessage("登录发生异常，请联系管理员");
+            }
+            String json = JSONObject.toJSONString(resultBody);
             httpResponse.getWriter().print(json);
         } catch (IOException e1) {
         }

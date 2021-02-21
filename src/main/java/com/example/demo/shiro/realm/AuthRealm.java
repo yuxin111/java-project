@@ -1,5 +1,6 @@
 package com.example.demo.shiro.realm;
 
+import com.example.demo.config.exception.MyException;
 import com.example.demo.shiro.entity.SysMenu;
 import com.example.demo.shiro.entity.SysRole;
 import com.example.demo.shiro.entity.SysToken;
@@ -53,7 +54,7 @@ public class AuthRealm extends AuthorizingRealm {
 
         //2. token失效
         if (tokenEntity == null || tokenEntity.getExpireTime().isBefore(LocalDateTime.now())) {
-            throw new IncorrectCredentialsException("token失效，请重新登录");
+            throw new IncorrectCredentialsException();
         }
 
         //3. 调用数据库的方法, 从数据库中查询 username 对应的用户记录
@@ -61,7 +62,7 @@ public class AuthRealm extends AuthorizingRealm {
 
         //4. 若用户不存在, 则可以抛出 UnknownAccountException 异常
         if (user == null) {
-            throw new UnknownAccountException("用户不存在!");
+            throw new UnknownAccountException();
         }
 
         //5. 根据用户的情况, 来构建 AuthenticationInfo 对象并返回. 通常使用的实现类为: SimpleAuthenticationInfo

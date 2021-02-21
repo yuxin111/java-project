@@ -1,15 +1,12 @@
 package com.example.demo.shiro.controller;
 
+import com.example.demo.core.entity.ResultBody;
 import com.example.demo.shiro.entity.SysUser;
 import com.example.demo.shiro.service.IShiroService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class ShiroController {
@@ -18,34 +15,20 @@ public class ShiroController {
     IShiroService shiroService;
 
     @PostMapping("/shiro/login")
-    public Map<String, Object> login(String username, String password) {
-
-        Map<String, Object> result = new HashMap<>();
+    public ResultBody login(String username, String password) {
         SysUser sysUser = shiroService.selectUserByLoginName(username);
-
+        ResultBody resultBody = new ResultBody();
         if (sysUser == null) {
-            result.put("status", "404");
-            result.put("msg", "账号不存在");
+            resultBody.setCode(404);
+            resultBody.setMessage("登录账号不存在，请检查");
         } else if (!sysUser.getPassword().equals(password)) {
-            result.put("status", "400");
-            result.put("msg", "密码错误");
+            resultBody.setCode(400);
+            resultBody.setMessage("密码错误，请重新输入");
         } else {
-            result = shiroService.createToken(sysUser.getUserId());
-            result.put("status", "200");
-            result.put("msg", "登录成功");
+            resultBody.setCode(200);
+            resultBody.setMessage("登录成功");
+            resultBody.setResult(shiroService.createToken(sysUser.getUserId()));
         }
-
-        return result;
-    }
-
-    @GetMapping("/shiro/test")
-    public Map<String, Object> test() {
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("status", "200");
-        result.put("msg", "hello");
-
-        return result;
-
+        return resultBody;
     }
 }

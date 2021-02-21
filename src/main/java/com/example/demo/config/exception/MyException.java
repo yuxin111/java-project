@@ -1,7 +1,5 @@
 package com.example.demo.config.exception;
 
-import com.example.demo.config.error.IBaseErrorInfo;
-
 public class MyException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
@@ -9,7 +7,7 @@ public class MyException extends RuntimeException {
 	/**
 	 * 错误码
 	 */
-	protected String errorCode;
+	protected int errorCode;
 	/**
 	 * 错误信息
 	 */
@@ -20,13 +18,13 @@ public class MyException extends RuntimeException {
 	}
 
 	public MyException(IBaseErrorInfo errorInfoInterface) {
-		super(errorInfoInterface.getResultCode());
+		super(errorInfoInterface.getResultMsg());
 		this.errorCode = errorInfoInterface.getResultCode();
 		this.errorMsg = errorInfoInterface.getResultMsg();
 	}
 	
 	public MyException(IBaseErrorInfo errorInfoInterface, Throwable cause) {
-		super(errorInfoInterface.getResultCode(), cause);
+		super(errorInfoInterface.getResultMsg(), cause);
 		this.errorCode = errorInfoInterface.getResultCode();
 		this.errorMsg = errorInfoInterface.getResultMsg();
 	}
@@ -36,24 +34,24 @@ public class MyException extends RuntimeException {
 		this.errorMsg = errorMsg;
 	}
 	
-	public MyException(String errorCode, String errorMsg) {
-		super(errorCode);
+	public MyException(int errorCode, String errorMsg) {
+		super(errorMsg);
 		this.errorCode = errorCode;
 		this.errorMsg = errorMsg;
 	}
 
-	public MyException(String errorCode, String errorMsg, Throwable cause) {
-		super(errorCode, cause);
+	public MyException(int errorCode, String errorMsg, Throwable cause) {
+		super(errorMsg, cause);
 		this.errorCode = errorCode;
 		this.errorMsg = errorMsg;
 	}
 	
 
-	public String getErrorCode() {
+	public int getErrorCode() {
 		return errorCode;
 	}
 
-	public void setErrorCode(String errorCode) {
+	public void setErrorCode(int errorCode) {
 		this.errorCode = errorCode;
 	}
 

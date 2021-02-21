@@ -3,55 +3,52 @@ package com.example.demo.core.handler;
 import com.example.demo.config.exception.MyException;
 import com.example.demo.core.entity.ResultBody;
 import com.example.demo.enums.CommonEnum;
+import org.apache.shiro.ShiroException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice
+@RestControllerAdvice
+@Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler {
-	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-	
-	/**
-	 * 处理自定义的业务异常
-	 * @param req
-	 * @param e
-	 * @return
-	 */
-    @ExceptionHandler(value = MyException.class)  
-    @ResponseBody  
-	public ResultBody myExceptionHandler(HttpServletRequest req, MyException e){
-    	logger.error("发生业务异常！原因是：{}",e.getErrorMsg());
-    	return ResultBody.error(e.getErrorCode(),e.getErrorMsg());
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    /**
+     * 处理自定义的业务异常
+     */
+    @ExceptionHandler(value = MyException.class)
+    public ResultBody myExceptionHandler(HttpServletRequest req, MyException e) {
+        logger.error("发生业务异常！原因是：", e.getErrorMsg());
+        return ResultBody.error(e.getErrorCode(), e.getErrorMsg());
     }
 
-	/**
-	 * 处理空指针的异常
-	 * @param req
-	 * @param e
-	 * @return
-	 */
-	@ExceptionHandler(value =NullPointerException.class)
-	@ResponseBody
-	public ResultBody exceptionHandler(HttpServletRequest req, NullPointerException e){
-		logger.error("发生空指针异常！原因是:",e);
-		return ResultBody.error(CommonEnum.BODY_NOT_MATCH);
-	}
+    /**
+     * 处理空指针的异常
+     */
+    @ExceptionHandler(value = NullPointerException.class)
+    public ResultBody exceptionHandler(HttpServletRequest req, NullPointerException e) {
+        logger.error("发生空指针异常！原因是：", e);
+        return ResultBody.error(CommonEnum.BODY_NOT_MATCH);
+    }
 
 
     /**
-        * 处理其他异常
-     * @param req
-     * @param e
-     * @return
+     * 处理其他异常
      */
-    @ExceptionHandler(value =Exception.class)
-	@ResponseBody
-	public ResultBody exceptionHandler(HttpServletRequest req, Exception e){
-    	logger.error("未知异常！原因是:",e);
-       	return ResultBody.error(CommonEnum.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(value = Exception.class)
+    public ResultBody exceptionHandler(HttpServletRequest req, Exception e) {
+        logger.error("未知异常！原因是：", e);
+        return ResultBody.error(CommonEnum.INTERNAL_SERVER_ERROR);
     }
 }

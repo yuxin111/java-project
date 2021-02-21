@@ -1,14 +1,14 @@
 package com.example.demo.core.entity;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.config.error.IBaseErrorInfo;
+import com.example.demo.config.exception.IBaseErrorInfo;
 import com.example.demo.enums.CommonEnum;
 
 public class ResultBody {
 	/**
 	 * 响应代码
 	 */
-	private String code;
+	private int code;
 
 	/**
 	 * 响应消息
@@ -23,16 +23,20 @@ public class ResultBody {
 	public ResultBody() {
 	}
 
+	public ResultBody(int code) {
+		this.code = code;
+	}
+
 	public ResultBody(IBaseErrorInfo errorInfo) {
 		this.code = errorInfo.getResultCode();
 		this.message = errorInfo.getResultMsg();
 	}
 
-	public String getCode() {
+	public int getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 
@@ -88,7 +92,7 @@ public class ResultBody {
 	/**
 	 * 失败
 	 */
-	public static ResultBody error(String code, String message) {
+	public static ResultBody error(int code, String message) {
 		ResultBody rb = new ResultBody();
 		rb.setCode(code);
 		rb.setMessage(message);
@@ -101,7 +105,7 @@ public class ResultBody {
 	 */
 	public static ResultBody error( String message) {
 		ResultBody rb = new ResultBody();
-		rb.setCode("-1");
+		rb.setCode(-1);
 		rb.setMessage(message);
 		rb.setResult(null);
 		return rb;

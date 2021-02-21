@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ public class ShiroServiceImpl implements IShiroService {
         sysTokenMapper.insertToken(tokenEntity);
 
         result.put("token", token);
-        result.put("expire", expireTime);
+        result.put("expire", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(expireTime));
         return result;
     }
 
