@@ -1,12 +1,11 @@
 package com.example.demo.shiro.controller;
 
 import com.example.demo.core.entity.ResultBody;
+import com.example.demo.shiro.dto.UserDto;
 import com.example.demo.shiro.entity.SysUser;
 import com.example.demo.shiro.service.IShiroService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ShiroController {
@@ -15,7 +14,9 @@ public class ShiroController {
     IShiroService shiroService;
 
     @PostMapping("/shiro/login")
-    public ResultBody login(String username, String password) {
+    public ResultBody login(@RequestBody UserDto userDto) {
+        String username = userDto.getUsername();
+        String password = userDto.getPassword();
         SysUser sysUser = shiroService.selectUserByLoginName(username);
         ResultBody resultBody = new ResultBody();
         if (sysUser == null) {
@@ -30,5 +31,10 @@ public class ShiroController {
             resultBody.setResult(shiroService.createToken(sysUser.getUserId()));
         }
         return resultBody;
+    }
+
+    @PostMapping("/shiro/test")
+    public ResultBody test() {
+        return ResultBody.success();
     }
 }

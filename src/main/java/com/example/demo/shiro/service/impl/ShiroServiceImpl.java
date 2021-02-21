@@ -17,8 +17,8 @@ import java.util.Map;
 @Service
 public class ShiroServiceImpl implements IShiroService {
 
-    // token过期时间（小时）
-    private final static int EXPIRE = 24;
+    // token过期时间（seconds）
+    private final static int EXPIRE = 7 * 24 * 60 * 60;
 
     @Autowired
     SysUserMapper sysUserMapper;
@@ -41,7 +41,7 @@ public class ShiroServiceImpl implements IShiroService {
         Map<String, Object> result = new HashMap<>();
         String token = TokenGenerator.generateValue();
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expireTime = now.plusHours(EXPIRE);
+        LocalDateTime expireTime = now.plusSeconds(EXPIRE);
 
         //判断是否生成过token
         SysToken tokenEntity = sysTokenMapper.selectTokenByUserId(userId);

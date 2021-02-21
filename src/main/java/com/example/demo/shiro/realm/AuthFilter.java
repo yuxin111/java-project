@@ -29,13 +29,13 @@ public class AuthFilter extends AuthenticatingFilter {
         String token = TokenUtil.getRequestToken((HttpServletRequest) servletRequest);
         return new AuthToken(token);
     }
-//    @Override
-//    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-//        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
-//            return true;
-//        }
-//        return false;
-//    }
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
+            return true;
+        }
+        return false;
+    }
 
 
     @Override
@@ -48,7 +48,7 @@ public class AuthFilter extends AuthenticatingFilter {
             httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
             httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
             httpResponse.setCharacterEncoding("UTF-8");
-            ResultBody resultBody = new ResultBody(403);
+            ResultBody resultBody = new ResultBody(46000);
             resultBody.setMessage("请先登录");
             String json = JSONObject.toJSONString(resultBody);
             httpResponse.getWriter().print(json);
@@ -67,7 +67,7 @@ public class AuthFilter extends AuthenticatingFilter {
         try {
             //处理登录失败的异常
             Throwable throwable = e.getCause() == null ? e : e.getCause();
-            ResultBody resultBody = new ResultBody(403);
+            ResultBody resultBody = new ResultBody(46000);
             if (e instanceof IncorrectCredentialsException) {
                 resultBody.setMessage("登录凭证已失效，请重新登录");
             } else if (e instanceof UnknownAccountException) {
