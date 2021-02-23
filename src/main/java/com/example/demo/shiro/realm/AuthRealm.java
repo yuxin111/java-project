@@ -1,11 +1,11 @@
 package com.example.demo.shiro.realm;
 
-import com.example.demo.config.exception.MyException;
-import com.example.demo.shiro.entity.SysMenu;
-import com.example.demo.shiro.entity.SysRole;
-import com.example.demo.shiro.entity.SysToken;
-import com.example.demo.shiro.entity.SysUser;
-import com.example.demo.shiro.service.IShiroService;
+import com.example.demo.core.entity.SysMenu;
+import com.example.demo.core.entity.SysRole;
+import com.example.demo.core.entity.SysToken;
+import com.example.demo.core.entity.SysUser;
+import com.example.demo.core.service.ISysTokenService;
+import com.example.demo.core.service.ISysUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -20,7 +20,10 @@ import java.time.LocalDateTime;
 public class AuthRealm extends AuthorizingRealm {
 
     @Autowired
-    IShiroService shiroService;
+    ISysUserService userService;
+
+    @Autowired
+    ISysTokenService tokenService;
 
     /**
      * 权限配置类
@@ -50,7 +53,7 @@ public class AuthRealm extends AuthorizingRealm {
         String accessToken = (String) authenticationToken.getPrincipal();
 
         //1. 根据accessToken，查询用户信息
-        SysToken tokenEntity = shiroService.selectTokenByToken(accessToken);
+        SysToken tokenEntity = tokenService.selectTokenByToken(accessToken);
 
         //2. token失效
         if (tokenEntity == null || tokenEntity.getExpireTime().isBefore(LocalDateTime.now())) {
@@ -58,7 +61,7 @@ public class AuthRealm extends AuthorizingRealm {
         }
 
         //3. 调用数据库的方法, 从数据库中查询 username 对应的用户记录
-        SysUser user = shiroService.selectUserByUserId(tokenEntity.getUserId());
+        SysUser user = userService.selectUserByUserId(tokenEntity.getUserId());
 
         //4. 若用户不存在, 则可以抛出 UnknownAccountException 异常
         if (user == null) {

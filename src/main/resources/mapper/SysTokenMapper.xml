@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.shiro.mapper.SysTokenMapper">
+<mapper namespace="com.example.demo.core.mapper.SysTokenMapper">
 
-    <resultMap id="SysTokenResult" type="com.example.demo.shiro.entity.SysToken">
+    <resultMap id="SysTokenResult" type="com.example.demo.core.entity.SysToken">
         <id property="userId" column="user_id"></id>
         <result property="token" column="token"></result>
         <result property="expireTime" column="expire_time"></result>
@@ -27,7 +27,7 @@
         WHERE t.token = #{token}
     </select>
 
-    <insert id="insertToken" parameterType="com.example.demo.shiro.entity.SysToken">
+    <insert id="insertToken" parameterType="com.example.demo.core.entity.SysToken">
         insert into sys_token(
             <if test="userId != null and userId != ''">user_id,</if>
             <if test="token != null and token != ''">token,</if>

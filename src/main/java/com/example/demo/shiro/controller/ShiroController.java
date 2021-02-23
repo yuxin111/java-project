@@ -1,23 +1,28 @@
 package com.example.demo.shiro.controller;
 
+import com.example.demo.common.controller.BaseController;
 import com.example.demo.core.entity.ResultBody;
-import com.example.demo.shiro.dto.UserDto;
-import com.example.demo.shiro.entity.SysUser;
-import com.example.demo.shiro.service.IShiroService;
+import com.example.demo.core.dto.UserDto;
+import com.example.demo.core.entity.SysUser;
+import com.example.demo.core.service.ISysTokenService;
+import com.example.demo.core.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class ShiroController {
+public class ShiroController extends BaseController {
 
     @Autowired
-    IShiroService shiroService;
+    ISysUserService userService;
+
+    @Autowired
+    ISysTokenService tokenService;
 
     @PostMapping("/shiro/login")
     public ResultBody login(@RequestBody UserDto userDto) {
         String username = userDto.getUsername();
         String password = userDto.getPassword();
-        SysUser sysUser = shiroService.selectUserByLoginName(username);
+        SysUser sysUser = userService.selectUserByLoginName(username);
         ResultBody resultBody = new ResultBody();
         if (sysUser == null) {
             resultBody.setCode(404);
@@ -28,7 +33,7 @@ public class ShiroController {
         } else {
             resultBody.setCode(200);
             resultBody.setMessage("登录成功");
-            resultBody.setResult(shiroService.createToken(sysUser.getUserId()));
+            resultBody.setResult(tokenService.createToken(sysUser.getUserId()));
         }
         return resultBody;
     }

@@ -1,4 +1,4 @@
-package com.example.demo.shiro.dto;
+package com.example.demo.core.dto;
 
 import lombok.Data;
 

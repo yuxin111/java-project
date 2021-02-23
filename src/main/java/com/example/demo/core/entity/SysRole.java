@@ -1,4 +1,4 @@
-package com.example.demo.shiro.entity;
+package com.example.demo.core.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

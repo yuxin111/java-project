@@ -1,10 +1,8 @@
 package com.example.demo;
 
-import com.alibaba.fastjson.JSONObject;
-import com.example.demo.shiro.entity.SysToken;
-import com.example.demo.shiro.entity.SysUser;
-import com.example.demo.shiro.mapper.SysTokenMapper;
-import com.example.demo.shiro.mapper.SysUserMapper;
+import com.example.demo.core.entity.SysToken;
+import com.example.demo.core.mapper.SysTokenMapper;
+import com.example.demo.core.mapper.SysUserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,9 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootTest
 class MyBatisTests {

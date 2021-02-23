@@ -1,7 +1,6 @@
-package com.example.demo.shiro.mapper;
+package com.example.demo.core.mapper;
 
-import com.example.demo.shiro.entity.SysToken;
-import com.example.demo.shiro.entity.SysUser;
+import com.example.demo.core.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

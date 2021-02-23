@@ -1,11 +1,9 @@
-package com.example.demo.shiro.service.impl;
+package com.example.demo.core.service.impl;
 
-import com.example.demo.shiro.entity.SysToken;
-import com.example.demo.shiro.entity.SysUser;
-import com.example.demo.shiro.mapper.SysTokenMapper;
-import com.example.demo.shiro.mapper.SysUserMapper;
+import com.example.demo.core.entity.SysToken;
+import com.example.demo.core.mapper.SysTokenMapper;
+import com.example.demo.core.service.ISysTokenService;
 import com.example.demo.shiro.realm.TokenGenerator;
-import com.example.demo.shiro.service.IShiroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,26 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class ShiroServiceImpl implements IShiroService {
+public class SysTokenServiceImpl implements ISysTokenService {
 
     // token过期时间（seconds）
     private final static int EXPIRE = 7 * 24 * 60 * 60;
 
     @Autowired
-    SysUserMapper sysUserMapper;
-
-    @Autowired
     SysTokenMapper sysTokenMapper;
-
-    @Override
-    public SysUser selectUserByLoginName(String loginName) {
-        return sysUserMapper.selectUserByLoginName(loginName);
-    }
-
-    @Override
-    public SysUser selectUserByUserId(Long userId) {
-        return sysUserMapper.selectUserByUserId(userId);
-    }
 
     @Override
     public Map<String, Object> createToken(Long userId) {
