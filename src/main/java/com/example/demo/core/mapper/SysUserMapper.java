@@ -2,6 +2,7 @@ package com.example.demo.core.mapper;
 
 import com.example.demo.core.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
 @Repository
 public interface SysUserMapper {
     /**
-     * 查找用户列表
+     * 用户列表 <- 用户信息
+     *
      * @param sysUser 用户信息
      * @return 用户信息列表
      */
@@ -18,6 +20,7 @@ public interface SysUserMapper {
 
     /**
      * 用户信息 <- 用户名
+     *
      * @param loginName 登录名
      * @return 用户信息
      */
@@ -25,6 +28,7 @@ public interface SysUserMapper {
 
     /**
      * 用户信息 <- 用户id
+     *
      * @param userId 用户id
      * @return
      */

@@ -5,9 +5,7 @@ import com.example.demo.core.entity.ResultBody;
 import com.example.demo.core.entity.SysUser;
 import com.example.demo.core.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ public class SysUserController extends BaseController {
     ISysUserService userService;
 
     @PostMapping("/list")
-    public ResultBody getUserList(SysUser user){
+    public ResultBody getUserList(@RequestBody SysUser user){
         startPage();
         List<SysUser> userList = userService.selectUserList(user);
         return getDataTable(userList);
