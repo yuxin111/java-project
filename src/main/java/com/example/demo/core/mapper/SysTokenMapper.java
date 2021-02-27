@@ -16,7 +16,7 @@ public interface SysTokenMapper{
     public SysToken selectTokenByUserId(Long userId);
 
     /**
-     * 插入token
+     * 保存token
      * @param sysToken token
      * @return
      */

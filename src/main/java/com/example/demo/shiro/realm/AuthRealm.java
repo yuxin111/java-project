@@ -61,7 +61,7 @@ public class AuthRealm extends AuthorizingRealm {
         }
 
         //3. 调用数据库的方法, 从数据库中查询 username 对应的用户记录
-        SysUser user = userService.selectUserByUserId(tokenEntity.getUserId());
+        SysUser user = userService.selectUserById(tokenEntity.getUserId());
 
         //4. 若用户不存在, 则可以抛出 UnknownAccountException 异常
         if (user == null) {

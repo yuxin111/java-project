@@ -1,6 +1,7 @@
 package com.example.demo.shiro.controller;
 
 import com.example.demo.common.controller.BaseController;
+import com.example.demo.common.utils.SecurityUtils;
 import com.example.demo.core.entity.ResultBody;
 import com.example.demo.core.dto.UserDto;
 import com.example.demo.core.entity.SysUser;
@@ -27,7 +28,7 @@ public class ShiroController extends BaseController {
         if (sysUser == null) {
             resultBody.setCode(404);
             resultBody.setMessage("登录账号不存在，请检查");
-        } else if (!sysUser.getPassword().equals(password)) {
+        } else if (!sysUser.getPassword().equals(SecurityUtils.md5(password))) {
             resultBody.setCode(400);
             resultBody.setMessage("密码错误，请重新输入");
         } else {

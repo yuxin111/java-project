@@ -29,6 +29,20 @@ public interface ISysUserService {
      * @param userId 用户id
      * @return
      */
-    public SysUser selectUserByUserId(Long userId);
+    public SysUser selectUserById(Long userId);
+
+    /**
+     * 保存用户
+     * @param user
+     * @return
+     */
+    public int insertUser(SysUser user);
+
+    /**
+     * 删除用户 <- 用户id
+     * @param userId 用户id
+     * @return
+     */
+    public int deleteUserById(Long userId);
 
 }
