@@ -23,18 +23,28 @@ public class SysUserController extends BaseController {
         return getDataTable(userList);
     }
 
-    @PostMapping("/insert")
-    public ResultBody insertUser(@RequestBody SysUser user){
-        int result = userService.insertUser(user);
+    @PostMapping("/add")
+    public ResultBody addUser(@RequestBody SysUser user){
+        int result = userService.addUser(user);
         if(result > 0){
-            return ResultBody.success("保存用户信息成功");
+            return ResultBody.success("新增用户信息成功");
         }else{
-            return ResultBody.error("保存用户信息失败");
+            return ResultBody.error("新增用户信息失败");
+        }
+    }
+
+    @PostMapping("/update")
+    public ResultBody updateUser(@RequestBody SysUser user){
+        int result = userService.updateUser(user);
+        if(result > 0){
+            return ResultBody.success("更新用户信息成功");
+        }else{
+            return ResultBody.error("更新用户信息失败");
         }
     }
 
     @GetMapping("/delete/{userId}")
-    public ResultBody insertUser(@PathVariable Long userId){
+    public ResultBody deleteUser(@PathVariable Long userId){
         int result = userService.deleteUserById(userId);
         if(result > 0){
             return ResultBody.success("删除用户信息成功");

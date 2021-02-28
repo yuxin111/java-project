@@ -19,12 +19,12 @@
 
     <select id="selectTokenByUserId" parameterType="Long" resultMap="SysTokenResult">
         <include refid="selectTokenVo"/>
-        WHERE t.user_id = #{userId}
+        where t.user_id = #{userId}
     </select>
 
     <select id="selectTokenByToken" parameterType="String" resultMap="SysTokenResult">
         <include refid="selectTokenVo"/>
-        WHERE t.token = #{token}
+        where t.token = #{token}
     </select>
 
     <insert id="insertToken" parameterType="com.example.demo.core.entity.SysToken">

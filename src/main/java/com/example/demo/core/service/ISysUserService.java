@@ -32,11 +32,18 @@ public interface ISysUserService {
     public SysUser selectUserById(Long userId);
 
     /**
-     * 保存用户
+     * 新增用户
      * @param user
      * @return
      */
-    public int insertUser(SysUser user);
+    public int addUser(SysUser user);
+
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
+    public int updateUser(SysUser user);
 
     /**
      * 删除用户 <- 用户id

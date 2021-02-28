@@ -1,5 +1,7 @@
 package com.example.demo.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,7 +17,18 @@ import java.util.List;
 public class SysUser extends BaseEntity {
     private Long userId;
     private String loginName;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private List<SysRole> roles;
+
+//    @JsonIgnore
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 }

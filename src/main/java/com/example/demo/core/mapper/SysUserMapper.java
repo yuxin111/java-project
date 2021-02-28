@@ -21,7 +21,7 @@ public interface SysUserMapper {
     /**
      * 用户信息 <- 用户名
      *
-     * @param loginName 登录名
+     * @param loginName 用户名
      * @return 用户信息
      */
     public SysUser selectUserByLoginName(String loginName);
@@ -35,11 +35,18 @@ public interface SysUserMapper {
     public SysUser selectUserById(Long userId);
 
     /**
-     * 保存用户
+     * 新增用户
      * @param user
      * @return
      */
-    public int insertUser(SysUser user);
+    public int addUser(SysUser user);
+
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
+    public int updateUser(SysUser user);
 
     /**
      * 删除用户 <- 用户id
@@ -47,4 +54,11 @@ public interface SysUserMapper {
      * @return
      */
     public int deleteUserById(Long userId);
+
+    /**
+     * 用户数量 <- 用户名
+     * @param loginName 用户名
+     * @return
+     */
+    public int selectCountByLoginName(String loginName);
 }
