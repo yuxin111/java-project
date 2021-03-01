@@ -60,8 +60,10 @@ public class SysUserServiceImpl implements ISysUserService {
         if(onceUser == null){
             throw new MyException("更新的用户不存在");
         }
-        int count = userMapper.selectCountByLoginName(user.getLoginName());
-        System.out.println("count: "+count);
+        onceUser = userMapper.selectUserByLoginName(user.getLoginName());
+        if(onceUser != null){
+            throw new MyException("已存在重复的登录账号，请重新命名");
+        }
         return userMapper.updateUser(user);
     }
 

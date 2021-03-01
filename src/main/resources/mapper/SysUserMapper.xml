@@ -49,13 +49,6 @@
         where u.user_id = #{userId}
     </select>
 
-    <select id="selectCountByLoginName" parameterType="String" resultType="int">
-        select count(1) from (
-            <include refid="selectUserVo"/>
-            where u.login_name = #{loginName}
-        ) as c
-    </select>
-
 
     <insert id="addUser" parameterType="com.example.demo.core.entity.SysUser" useGeneratedKeys="true"
             keyProperty="userId">

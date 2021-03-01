@@ -54,11 +54,4 @@ public interface SysUserMapper {
      * @return
      */
     public int deleteUserById(Long userId);
-
-    /**
-     * 用户数量 <- 用户名
-     * @param loginName 用户名
-     * @return
-     */
-    public int selectCountByLoginName(String loginName);
 }
