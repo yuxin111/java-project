@@ -15,6 +15,7 @@ import java.util.List;
 public class SysRole extends BaseEntity {
     private Long roleId;
     private String roleName;
+    private String code;
     // 角色状态（0停用，1正常）
     private String status;
 
