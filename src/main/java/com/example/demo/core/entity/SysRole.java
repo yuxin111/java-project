@@ -11,13 +11,14 @@ import java.util.List;
  * @author YuXin
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 public class SysRole extends BaseEntity {
+
     private Long roleId;
     private String roleName;
     private String code;
     // 角色状态（0停用，1正常）
-    private String status;
+    private Integer status;
 
     private List<SysMenu> menus;
 }

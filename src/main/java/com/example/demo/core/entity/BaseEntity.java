@@ -8,6 +8,7 @@ import java.util.Date;
 
 @Data
 public class BaseEntity implements Serializable {
+
     private String createBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

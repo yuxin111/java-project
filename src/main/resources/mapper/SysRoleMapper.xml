@@ -40,7 +40,7 @@
             <if test="code != null and code != ''">
                 and r.code like concat('%', #{code}, '%')
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 and r.status = #{status}
             </if>
         </where>
