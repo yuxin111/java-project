@@ -34,19 +34,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return roleMapper.selectRoleById(roleId);
     }
 
-//    @Override
-//    public int addRole(SysRole role) {
-//        if(StringUtils.hasText(role.getPassword())){
-//            role.setPassword(SecurityUtils.md5(role.getPassword()));
-//        }else{
-//            throw new MyException("请输入密码");
-//        }
-//        SysRole repeatRole = roleMapper.selectRoleByLoginName(role.getLoginName());
-//        if(repeatRole != null){
-//            throw new MyException("角色名不能重复");
-//        }
-//        return roleMapper.addRole(role);
-//    }
+    @Override
+    public int addRole(SysRole role) {
+        return roleMapper.addRole(role);
+    }
 //
 //    @Override
 //    public int updateRole(SysRole role) {

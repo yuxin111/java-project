@@ -57,22 +57,22 @@
 <!--    </select>-->
 
 
-<!--    <insert id="addRole" parameterType="com.example.demo.core.entity.SysRole" useGeneratedKeys="true"-->
-<!--            keyProperty="roleId">-->
-<!--        insert into sys_role(-->
-<!--        <if test="roleId != null and roleId != ''">role_id,</if>-->
-<!--        <if test="loginName != null and loginName != ''">login_name,</if>-->
-<!--        <if test="password != null and password != ''">password,</if>-->
-<!--        <if test="createBy != null and createBy != ''">create_by,</if>-->
-<!--        create_time-->
-<!--        )values(-->
-<!--        <if test="roleId != null and roleId != ''">#{roleId},</if>-->
-<!--        <if test="loginName != null and loginName != ''">#{loginName},</if>-->
-<!--        <if test="password != null and password != ''">#{password},</if>-->
-<!--        <if test="createBy != null and createBy != ''">#{createBy},</if>-->
-<!--        sysdate()-->
-<!--        )-->
-<!--    </insert>-->
+    <insert id="addRole" parameterType="com.example.demo.core.entity.SysRole" useGeneratedKeys="true"
+            keyProperty="roleId">
+        insert into sys_role(
+        <if test="roleName != null and roleName != ''">role_name,</if>
+        <if test="code != null and code != ''">code,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="roleName != null and roleName != ''">#{roleId},</if>
+        <if test="code != null and code != ''">#{code},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
 
 <!--    <update id="updateRole" parameterType="com.example.demo.core.entity.SysRole">-->
 <!--        update sys_role-->

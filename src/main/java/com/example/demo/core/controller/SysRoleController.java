@@ -23,15 +23,15 @@ public class SysRoleController extends BaseController {
         return getDataTable(roleList);
     }
 
-//    @PostMapping("/add")
-//    public ResultBody addRole(@RequestBody SysRole role){
-//        int result = roleService.addRole(role);
-//        if(result > 0){
-//            return ResultBody.success("新增角色信息成功");
-//        }else{
-//            return ResultBody.error("新增角色信息失败");
-//        }
-//    }
+    @PostMapping("/add")
+    public ResultBody addRole(@RequestBody SysRole role){
+        int result = roleService.addRole(role);
+        if(result > 0){
+            return ResultBody.success("新增角色信息成功");
+        }else{
+            return ResultBody.error("新增角色信息失败");
+        }
+    }
 //
 //    @PostMapping("/update")
 //    public ResultBody updateRole(@RequestBody SysRole role){

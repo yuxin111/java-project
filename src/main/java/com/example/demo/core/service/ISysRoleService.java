@@ -28,12 +28,13 @@ public interface ISysRoleService {
      */
     public SysRole selectRoleById(Long roleId);
 
-//    /**
-//     * 新增角色
-//     * @param role
-//     * @return
-//     */
-//    public int addRole(SysRole role);
+
+    /**
+     * 新增角色
+     * @param role 角色
+     * @return
+     */
+    public int addRole(SysRole role);
 //
 //    /**
 //     * 更新角色
