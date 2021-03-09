@@ -2,6 +2,7 @@ package com.example.demo.core.service.impl;
 
 import com.example.demo.common.utils.SecurityUtils;
 import com.example.demo.config.exception.MyException;
+import com.example.demo.core.entity.SysRole;
 import com.example.demo.core.entity.SysUser;
 import com.example.demo.core.mapper.SysUserMapper;
 import com.example.demo.core.mapper.SysUserRoleMapper;
@@ -44,10 +45,12 @@ public class SysUserServiceImpl implements ISysUserService {
         }else{
             throw new MyException("请输入密码");
         }
-        SysUser repeatUser = userMapper.selectUserByLoginName(user.getLoginName());
-        if(repeatUser != null){
-            throw new MyException("用户名不能重复");
+
+        SysUser tempUser = userMapper.selectUserByLoginName(user.getLoginName());
+        if(tempUser != null){
+            throw new MyException("登录账号不能重复");
         }
+
         return userMapper.addUser(user);
     }
 
@@ -56,14 +59,16 @@ public class SysUserServiceImpl implements ISysUserService {
         if(StringUtils.hasText(user.getPassword())){
             user.setPassword(SecurityUtils.md5(user.getPassword()));
         }
-        SysUser onceUser = userMapper.selectUserById(user.getUserId());
-        if(onceUser == null){
-            throw new MyException("更新的用户不存在");
+
+        List<SysUser> userList;
+        SysUser onceUser = new SysUser();
+        onceUser.setUserId(user.getUserId());
+        onceUser.setLoginName(user.getLoginName());
+        userList = userMapper.selectUserByParams(onceUser);
+        if(userList != null && userList.size() > 0){
+            throw new MyException("登录账号不能重复");
         }
-        onceUser = userMapper.selectUserByLoginName(user.getLoginName());
-        if(onceUser != null){
-            throw new MyException("已存在重复的登录账号，请重新命名");
-        }
+
         return userMapper.updateUser(user);
     }
 

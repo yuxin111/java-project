@@ -15,13 +15,6 @@ public interface ISysRoleService {
     public List<SysRole> selectRoleList(SysRole role);
 
     /**
-     * 角色信息 <- 角色名
-     * @param loginName 登录名
-     * @return
-     */
-    public SysRole selectRoleByLoginName(String loginName);
-
-    /**
      * 角色信息 <- 角色id
      * @param roleId 角色id
      * @return
@@ -36,18 +29,18 @@ public interface ISysRoleService {
      */
     public int addRole(SysRole role);
 //
-//    /**
-//     * 更新角色
-//     * @param role
-//     * @return
-//     */
-//    public int updateRole(SysRole role);
+    /**
+     * 更新角色
+     * @param role 角色
+     * @return
+     */
+    public int updateRole(SysRole role);
 //
-//    /**
-//     * 删除角色 <- 角色id
-//     * @param roleId 角色id
-//     * @return
-//     */
-//    public int deleteRoleById(Long roleId);
+    /**
+     * 删除角色 <- 角色id
+     * @param roleId 角色id
+     * @return
+     */
+    public int deleteRoleById(Long roleId);
 
 }

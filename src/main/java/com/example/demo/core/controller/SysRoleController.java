@@ -33,23 +33,23 @@ public class SysRoleController extends BaseController {
         }
     }
 //
-//    @PostMapping("/update")
-//    public ResultBody updateRole(@RequestBody SysRole role){
-//        int result = roleService.updateRole(role);
-//        if(result > 0){
-//            return ResultBody.success("更新角色信息成功");
-//        }else{
-//            return ResultBody.error("更新角色信息失败");
-//        }
-//    }
+    @PostMapping("/update")
+    public ResultBody updateRole(@RequestBody SysRole role){
+        int result = roleService.updateRole(role);
+        if(result > 0){
+            return ResultBody.success("更新角色信息成功");
+        }else{
+            return ResultBody.error("更新角色信息失败");
+        }
+    }
 //
-//    @GetMapping("/delete/{roleId}")
-//    public ResultBody deleteRole(@PathVariable Long roleId){
-//        int result = roleService.deleteRoleById(roleId);
-//        if(result > 0){
-//            return ResultBody.success("删除角色信息成功");
-//        }else{
-//            return ResultBody.error("删除角色信息失败");
-//        }
-//    }
+    @GetMapping("/delete/{roleId}")
+    public ResultBody deleteRole(@PathVariable Long roleId){
+        int result = roleService.deleteRoleById(roleId);
+        if(result > 0){
+            return ResultBody.success("删除角色信息成功");
+        }else{
+            return ResultBody.error("删除角色信息失败");
+        }
+    }
 }

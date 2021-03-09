@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,41 +26,51 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
-    public SysRole selectRoleByLoginName(String loginName) {
-        return roleMapper.selectRoleByLoginName(loginName);
-    }
-
-    @Override
     public SysRole selectRoleById(Long roleId) {
         return roleMapper.selectRoleById(roleId);
     }
 
     @Override
     public int addRole(SysRole role) {
+        valiRole(role);
         return roleMapper.addRole(role);
     }
-//
-//    @Override
-//    public int updateRole(SysRole role) {
-//        if(StringUtils.hasText(role.getPassword())){
-//            role.setPassword(SecurityUtils.md5(role.getPassword()));
-//        }
-//        SysRole onceRole = roleMapper.selectRoleById(role.getRoleId());
-//        if(onceRole == null){
-//            throw new MyException("更新的角色不存在");
-//        }
-//        onceRole = roleMapper.selectRoleByLoginName(role.getLoginName());
-//        if(onceRole != null){
-//            throw new MyException("已存在重复的登录账号，请重新命名");
-//        }
-//        return roleMapper.updateRole(role);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public int deleteRoleById(Long roleId) {
-//        // 删除角色关联角色
+
+    @Override
+    public int updateRole(SysRole role) {
+        valiRole(role);
+        return roleMapper.updateRole(role);
+    }
+
+    @Override
+    @Transactional
+    public int deleteRoleById(Long roleId) {
+        // 删除角色关联角色
 //        roleRoleMapper.deleteByRoleId(roleId);
-//        return roleMapper.deleteRoleById(roleId);
-//    }
+        return roleMapper.deleteRoleById(roleId);
+    }
+
+    /**
+     * 验证角色信息
+     * @param role
+     */
+    private void valiRole(SysRole role) {
+        List<SysRole> roleList;
+        SysRole onceTempRole = new SysRole();
+        SysRole secondTempRole = new SysRole();
+
+        onceTempRole.setRoleName(role.getRoleName());
+        onceTempRole.setRoleId(role.getRoleId());
+        roleList = roleMapper.selectRoleByParams(onceTempRole);
+        if(roleList != null && roleList.size() > 0){
+            throw new MyException("角色名称不能重复");
+        }
+
+        secondTempRole.setCode(role.getCode());
+        secondTempRole.setRoleId(role.getRoleId());
+        roleList = roleMapper.selectRoleByParams(secondTempRole);
+        if(roleList != null && roleList.size() > 0){
+            throw new MyException("角色代码不能重复");
+        }
+    }
 }

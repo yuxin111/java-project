@@ -44,6 +44,18 @@
         where u.login_name = #{loginName}
     </select>
 
+    <select id="selectUserByParams" parameterType="com.example.demo.core.entity.SysUser" resultMap="SysUserResult">
+        <include refid="selectUserVo"/>
+        <where>
+            <if test="userId != null">
+                and u.user_id != #{userId}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and u.login_name = #{loginName}
+            </if>
+        </where>
+    </select>
+
     <select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
         <include refid="selectUserVo"/>
         where u.user_id = #{userId}
