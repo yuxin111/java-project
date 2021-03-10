@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class SysRoleServiceImpl implements ISysRoleService {
 
     @Autowired
@@ -43,7 +44,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
-    @Transactional
     public int deleteRoleById(Long roleId) {
         // 删除角色关联角色
 //        roleRoleMapper.deleteByRoleId(roleId);

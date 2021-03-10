@@ -21,6 +21,7 @@ public class SysUser extends BaseEntity {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    private Long[] roleIds;
     private List<SysRole> roles;
 
 //    @JsonIgnore

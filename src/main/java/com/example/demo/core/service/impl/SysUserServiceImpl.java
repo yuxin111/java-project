@@ -4,6 +4,7 @@ import com.example.demo.common.utils.SecurityUtils;
 import com.example.demo.config.exception.MyException;
 import com.example.demo.core.entity.SysRole;
 import com.example.demo.core.entity.SysUser;
+import com.example.demo.core.entity.SysUserRole;
 import com.example.demo.core.mapper.SysUserMapper;
 import com.example.demo.core.mapper.SysUserRoleMapper;
 import com.example.demo.core.service.ISysUserService;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class SysUserServiceImpl implements ISysUserService {
 
     @Autowired
@@ -51,8 +54,15 @@ public class SysUserServiceImpl implements ISysUserService {
             throw new MyException("登录账号不能重复");
         }
 
-        return userMapper.addUser(user);
+        int rows = userMapper.addUser(user);
+
+        // 新增用户角色关联
+        batchUserRole(user.getUserId(),user.getRoleIds());
+
+        return rows;
     }
+
+
 
     @Override
     public int updateUser(SysUser user) {
@@ -73,10 +83,28 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    @Transactional
     public int deleteUserById(Long userId) {
         // 删除用户关联角色
         userRoleMapper.deleteByUserId(userId);
         return userMapper.deleteUserById(userId);
+    }
+
+    /**
+     * 新增用户角色
+     * @param userId 用户id
+     * @param roleIds 角色id列表
+     */
+    private void batchUserRole(Long userId, Long[] roleIds) {
+        if(roleIds != null && roleIds.length > 0){
+            List<SysUserRole> userRoleList = new ArrayList<>();
+            SysUserRole userRole;
+            for (Long roleId : roleIds){
+                userRole = new SysUserRole();
+                userRole.setRoleId(roleId);
+                userRole.setUserId(userId);
+                userRoleList.add(userRole);
+            }
+            userRoleMapper.batchUserRole(userRoleList);
+        }
     }
 }

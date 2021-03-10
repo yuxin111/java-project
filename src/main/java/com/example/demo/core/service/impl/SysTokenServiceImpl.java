@@ -6,6 +6,7 @@ import com.example.demo.core.service.ISysTokenService;
 import com.example.demo.shiro.realm.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Transactional
 public class SysTokenServiceImpl implements ISysTokenService {
 
     // token过期时间（seconds）
