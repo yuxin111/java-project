@@ -78,6 +78,11 @@ public class SysUserServiceImpl implements ISysUserService {
         if(userList != null && userList.size() > 0){
             throw new MyException("登录账号不能重复");
         }
+        // 删除原有用户角色关联
+        userRoleMapper.deleteByUserId(user.getUserId());
+
+        // 新增用户角色关联
+        batchUserRole(user.getUserId(),user.getRoleIds());
 
         return userMapper.updateUser(user);
     }
