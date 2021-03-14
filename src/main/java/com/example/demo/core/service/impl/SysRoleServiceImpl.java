@@ -4,6 +4,7 @@ import com.example.demo.common.utils.SecurityUtils;
 import com.example.demo.config.exception.MyException;
 import com.example.demo.core.entity.SysRole;
 import com.example.demo.core.mapper.SysRoleMapper;
+import com.example.demo.core.mapper.SysUserRoleMapper;
 import com.example.demo.core.service.ISysRoleService;
 import com.example.demo.core.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Autowired
     SysRoleMapper roleMapper;
+
+    @Autowired
+    SysUserRoleMapper userRoleMapper;
 
     @Override
     public List<SysRole> selectRoleList(SysRole role) {
@@ -45,8 +49,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     public int deleteRoleById(Long roleId) {
-        // 删除角色关联角色
-//        roleRoleMapper.deleteByRoleId(roleId);
+        // 删除用户角色关联
+        userRoleMapper.deleteByRoleId(roleId);
         return roleMapper.deleteRoleById(roleId);
     }
 

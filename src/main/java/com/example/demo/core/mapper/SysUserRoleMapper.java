@@ -13,11 +13,18 @@ import java.util.List;
 public interface SysUserRoleMapper {
 
     /**
-     * 删除用户角色数据
+     * 删除用户角色数据 <- 用户id
      * @param userId 用户id
      * @return
      */
     public int deleteByUserId(Long userId);
+
+    /**
+     * 删除用户角色数据 <- 角色id
+     * @param roleId 角色id
+     * @return
+     */
+    public int deleteByRoleId(Long roleId);
 
     /**
      * 新增用户角色信息
@@ -25,4 +32,5 @@ public interface SysUserRoleMapper {
      * @return
      */
     public int batchUserRole(List<SysUserRole> userRoleList);
+
 }
