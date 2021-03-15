@@ -3,6 +3,9 @@ package com.example.demo.core.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 菜单权限表
  *
@@ -14,5 +17,8 @@ public class SysMenu extends BaseEntity {
     private Long menuId;
     private String menuName;
     private Long parentId;
+
+    // 子菜单
+    private List<SysMenu> children = new ArrayList<SysMenu>();
 
 }
