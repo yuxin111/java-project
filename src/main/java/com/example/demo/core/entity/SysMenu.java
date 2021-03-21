@@ -17,6 +17,7 @@ public class SysMenu extends BaseEntity {
     private Long menuId;
     private String menuName;
     private Long parentId;
+    private String code;
 
     // 子菜单
     private List<SysMenu> children = new ArrayList<SysMenu>();

@@ -21,21 +21,20 @@ public interface ISysRoleService {
      */
     public SysRole selectRoleById(Long roleId);
 
-
     /**
      * 新增角色
      * @param role 角色
      * @return
      */
     public int addRole(SysRole role);
-//
+
     /**
      * 更新角色
      * @param role 角色
      * @return
      */
     public int updateRole(SysRole role);
-//
+
     /**
      * 删除角色 <- 角色id
      * @param roleId 角色id

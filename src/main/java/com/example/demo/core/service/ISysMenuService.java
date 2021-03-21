@@ -14,4 +14,25 @@ public interface ISysMenuService {
      * @return
      */
     public List<SysMenu> selectMenuList(SysMenu menu);
+
+    /**
+     * 新增菜单
+     * @param menu 菜单
+     * @return
+     */
+    public int addMenu(SysMenu menu);
+
+    /**
+     * 更新菜单
+     * @param menu 菜单
+     * @return
+     */
+    public int updateMenu(SysMenu menu);
+
+    /**
+     * 删除菜单 <- 菜单id
+     * @param menuId 菜单id
+     * @return
+     */
+    public int deleteMenuById(Long menuId);
 }

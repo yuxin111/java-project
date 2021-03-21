@@ -19,6 +19,7 @@
     <resultMap id="MenuResult" type="com.example.demo.core.entity.SysMenu">
         <id property="menuId" column="menu_id"/>
         <result property="menuName" column="menu_name"/>
+        <result property="code" column="code"/>
         <result property="parentId" column="parent_id"/>
     </resultMap>
 
