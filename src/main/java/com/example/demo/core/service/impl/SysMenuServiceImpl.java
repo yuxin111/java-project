@@ -50,22 +50,14 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @param menu
      */
     private void valiMenu(SysMenu menu) {
-//        List<SysRole> roleList;
-//        SysRole onceTempRole = new SysRole();
-//        SysRole secondTempRole = new SysRole();
-//
-//        onceTempRole.setRoleName(role.getRoleName());
-//        onceTempRole.setRoleId(role.getRoleId());
-//        roleList = roleMapper.selectRoleByParams(onceTempRole);
-//        if(roleList != null && roleList.size() > 0){
-//            throw new MyException("角色名称不能重复");
-//        }
-//
-//        secondTempRole.setCode(role.getCode());
-//        secondTempRole.setRoleId(role.getRoleId());
-//        roleList = roleMapper.selectRoleByParams(secondTempRole);
-//        if(roleList != null && roleList.size() > 0){
-//            throw new MyException("角色代码不能重复");
-//        }
+        List<SysMenu> menuList;
+        SysMenu onceTempMenu = new SysMenu();
+
+        onceTempMenu.setCode(menu.getCode());
+        onceTempMenu.setMenuId(menu.getMenuId());
+        menuList = menuMapper.selectMenuByParams(onceTempMenu);
+        if(menuList != null && menuList.size() > 0){
+            throw new MyException("菜单标识不能重复");
+        }
     }
 }

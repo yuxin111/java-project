@@ -33,6 +33,18 @@
         </where>
     </select>
 
+    <select id="selectMenuByParams" parameterType="com.example.demo.core.entity.SysMenu" resultMap="SysMenuResult">
+        <include refid="selectMenuVo"/>
+        <where>
+            <if test="menuId != null">
+                and m.menu_id != #{menuId}
+            </if>
+            <if test="code != null and code != ''">
+                and m.code = #{code}
+            </if>
+        </where>
+    </select>
+
     <insert id="addMenu" parameterType="com.example.demo.core.entity.SysMenu" useGeneratedKeys="true"
             keyProperty="menuId">
         insert into sys_menu(
@@ -57,7 +69,7 @@
         <set>
             <if test="menuName != null and menuName != ''">menu_name = #{menuName},</if>
             <if test="code != null and code != ''">code = #{code},</if>
-            <if test="parentId != null and parentId != ''">parent_id = #{parentId},</if>
+            parent_id = #{parentId},
 <!--            <if test="status != null">status = #{status},</if>-->
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()

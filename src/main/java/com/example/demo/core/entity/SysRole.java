@@ -21,4 +21,5 @@ public class SysRole extends BaseEntity {
     private Integer status;
 
     private List<SysMenu> menus;
+    private Long[] menuIds;
 }

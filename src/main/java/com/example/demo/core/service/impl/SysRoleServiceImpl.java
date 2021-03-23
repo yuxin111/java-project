@@ -38,7 +38,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public int addRole(SysRole role) {
         valiRole(role);
-        return roleMapper.addRole(role);
+        int rows = roleMapper.addRole(role);
+
+        return rows;
     }
 
     @Override

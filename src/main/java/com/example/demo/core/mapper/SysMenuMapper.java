@@ -2,6 +2,7 @@ package com.example.demo.core.mapper;
 
 import com.example.demo.core.entity.SysMenu;
 import com.example.demo.core.entity.SysMenu;
+import com.example.demo.core.entity.SysRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -39,4 +40,13 @@ public interface SysMenuMapper {
      * @return
      */
     public int deleteMenuById(Long menuId);
+
+    /**
+     * 菜单列表 <- 菜单参数
+     *
+     * @param menu 菜单参数
+     * @desc 若参数对象存在主键，则会查询出不包括该主键的对象列表
+     * @return 菜单信息
+     */
+    List<SysMenu> selectMenuByParams(SysMenu menu);
 }
