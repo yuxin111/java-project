@@ -23,6 +23,12 @@ public class SysUserController extends BaseController {
         return getDataTable(userList);
     }
 
+    @GetMapping("/get/{userId}")
+    public ResultBody getUserList(@PathVariable("userId") Long userId){
+        SysUser user = userService.selectUserById(userId);
+        return ResultBody.success(user);
+    }
+
     @PostMapping("/add")
     public ResultBody addUser(@RequestBody SysUser user){
         int result = userService.addUser(user);

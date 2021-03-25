@@ -3,6 +3,7 @@ package com.example.demo.core.controller;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.core.entity.ResultBody;
 import com.example.demo.core.entity.SysRole;
+import com.example.demo.core.entity.SysUser;
 import com.example.demo.core.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,12 @@ public class SysRoleController extends BaseController {
         startPage();
         List<SysRole> roleList = roleService.selectRoleList(role);
         return getDataTable(roleList);
+    }
+
+    @GetMapping("/get/{roleId}")
+    public ResultBody getRoleList(@PathVariable("roleId") Long roleId){
+        SysRole role = roleService.selectRoleById(roleId);
+        return ResultBody.success(role);
     }
 
     @PostMapping("/add")

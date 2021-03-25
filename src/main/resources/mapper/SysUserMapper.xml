@@ -31,7 +31,9 @@
     </sql>
 
     <select id="selectUserList" parameterType="com.example.demo.core.entity.SysUser" resultMap="SysUserResult">
-        <include refid="selectUserVo"/>
+        select
+            distinct u.user_id,u.login_name,u.password,u.create_by,u.create_time,u.update_by,u.update_time
+        from sys_user u
         <where>
             <if test="loginName != null and loginName != ''">
                 and u.login_name like concat('%', #{loginName}, '%')
