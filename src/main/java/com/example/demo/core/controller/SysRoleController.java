@@ -39,7 +39,7 @@ public class SysRoleController extends BaseController {
             return ResultBody.error("新增角色信息失败");
         }
     }
-//
+
     @PostMapping("/update")
     public ResultBody updateRole(@RequestBody SysRole role){
         int result = roleService.updateRole(role);
@@ -49,7 +49,7 @@ public class SysRoleController extends BaseController {
             return ResultBody.error("更新角色信息失败");
         }
     }
-//
+
     @GetMapping("/delete/{roleId}")
     public ResultBody deleteRole(@PathVariable Long roleId){
         int result = roleService.deleteRoleById(roleId);
