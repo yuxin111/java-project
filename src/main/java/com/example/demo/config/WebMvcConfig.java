@@ -15,9 +15,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .maxAge(3600)
                 .allowCredentials(true);
     }
-
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(corsInterceptor).addPathPatterns("/**");
-//    }
 }

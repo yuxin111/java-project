@@ -24,7 +24,14 @@ public interface SysRoleMapper {
      * @desc 若参数对象存在主键，则会查询出不包括该主键的对象列表
      * @return 角色信息
      */
-    public List<SysRole> selectRoleByParams(SysRole role);
+    public List<SysRole> selectRolesByParams(SysRole role);
+
+    /**
+     * 角色列表 <- 用户id
+     * @param userId 用户id
+     * @return
+     */
+    public List<SysRole> selectRolesByUserId(Long userId);
 
     /**
      * 角色信息 <- 角色id

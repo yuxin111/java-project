@@ -33,6 +33,15 @@
         </where>
     </select>
 
+    <select id="selectMenusByUserId" parameterType="Long" resultMap="SysMenuResult">
+        select
+            m.menu_id,m.menu_name,m.code,m.parent_id,m.create_by,m.create_time,m.update_by,m.update_time
+        from sys_menu m
+			 left join sys_role_menu rm on m.menu_id = rm.menu_id
+			 left join sys_user_role ur on rm.role_id = ur.role_id
+	    where ur.user_id = #{userId}
+    </select>
+
     <select id="selectMenuByParams" parameterType="com.example.demo.core.entity.SysMenu" resultMap="SysMenuResult">
         <include refid="selectMenuVo"/>
         <where>

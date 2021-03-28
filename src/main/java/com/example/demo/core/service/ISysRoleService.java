@@ -15,6 +15,13 @@ public interface ISysRoleService {
     public List<SysRole> selectRoleList(SysRole role);
 
     /**
+     * 角色列表 <- 用户id
+     * @param userId 用户id
+     * @return
+     */
+    public List<SysRole> selectRolesByUserId(Long userId);
+
+    /**
      * 角色信息 <- 角色id
      * @param roleId 角色id
      * @return

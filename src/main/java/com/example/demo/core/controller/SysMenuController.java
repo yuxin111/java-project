@@ -7,6 +7,7 @@ import com.example.demo.core.entity.SysMenu;
 import com.example.demo.core.service.ISysMenuService;
 import com.example.demo.core.service.ISysMenuService;
 import com.example.demo.enums.CommonEnum;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class SysMenuController extends BaseController {
     @Autowired
     ISysMenuService menuService;
 
+    @RequiresPermissions("system:menu:list")
     @PostMapping("/list")
     public ResultBody getMenuList(@RequestBody SysMenu menu){
         List<SysMenu> menuList = menuService.selectMenuList(menu);

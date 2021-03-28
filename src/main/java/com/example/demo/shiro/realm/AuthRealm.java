@@ -4,6 +4,8 @@ import com.example.demo.core.entity.SysMenu;
 import com.example.demo.core.entity.SysRole;
 import com.example.demo.core.entity.SysToken;
 import com.example.demo.core.entity.SysUser;
+import com.example.demo.core.service.ISysMenuService;
+import com.example.demo.core.service.ISysRoleService;
 import com.example.demo.core.service.ISysTokenService;
 import com.example.demo.core.service.ISysUserService;
 import org.apache.shiro.authc.*;
@@ -13,14 +15,22 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class AuthRealm extends AuthorizingRealm {
 
     @Autowired
     ISysUserService userService;
+
+    @Autowired
+    ISysRoleService roleService;
+
+    @Autowired
+    ISysMenuService menuService;
 
     @Autowired
     ISysTokenService tokenService;
@@ -32,18 +42,27 @@ public class AuthRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //1. 从 PrincipalCollection 中来获取登录用户的信息
+
         SysUser user = (SysUser) principalCollection.getPrimaryPrincipal();
-        //2. 添加角色和权限
+
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        for (SysRole role : user.getRoles()) {
-            //2.1 添加角色
-            simpleAuthorizationInfo.addRole(role.getRoleName());
-            for (SysMenu menu : role.getMenus()) {
-                //2.1.1 添加菜单
-                simpleAuthorizationInfo.addStringPermission(menu.getMenuName());
+
+        List<SysRole> roles = roleService.selectRolesByUserId(user.getUserId());
+        List<SysMenu> menus = menuService.selectMenusByUserId(user.getUserId());
+
+        for (SysRole role : roles) {
+            String code = role.getCode();
+            if(StringUtils.hasText(code)){
+                simpleAuthorizationInfo.addRole(code);
             }
         }
+        for (SysMenu menu : menus) {
+            String code = menu.getCode();
+            if(StringUtils.hasText(code)) {
+                simpleAuthorizationInfo.addStringPermission(code);
+            }
+        }
+
         return simpleAuthorizationInfo;
     }
 

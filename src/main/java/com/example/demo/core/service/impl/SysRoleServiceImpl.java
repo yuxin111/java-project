@@ -37,6 +37,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
+    public List<SysRole> selectRolesByUserId(Long userId) {
+        return roleMapper.selectRolesByUserId(userId);
+    }
+
+    @Override
     public SysRole selectRoleById(Long roleId) {
         return roleMapper.selectRoleById(roleId);
     }
@@ -74,6 +79,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return roleMapper.deleteRoleById(roleId);
     }
 
+
+
     /**
      * 验证角色信息
      * @param role
@@ -85,14 +92,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
         onceTempRole.setRoleName(role.getRoleName());
         onceTempRole.setRoleId(role.getRoleId());
-        roleList = roleMapper.selectRoleByParams(onceTempRole);
+        roleList = roleMapper.selectRolesByParams(onceTempRole);
         if(roleList != null && roleList.size() > 0){
             throw new MyException("角色名称不能重复");
         }
 
         secondTempRole.setCode(role.getCode());
         secondTempRole.setRoleId(role.getRoleId());
-        roleList = roleMapper.selectRoleByParams(secondTempRole);
+        roleList = roleMapper.selectRolesByParams(secondTempRole);
         if(roleList != null && roleList.size() > 0){
             throw new MyException("角色代码不能重复");
         }

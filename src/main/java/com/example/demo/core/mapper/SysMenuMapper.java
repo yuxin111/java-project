@@ -13,7 +13,7 @@ import java.util.List;
 public interface SysMenuMapper {
 
     /**
-     * 菜单列表
+     * 菜单列表 <- 菜单信息
      *
      * @param menu 菜单信息
      * @return
@@ -21,14 +21,21 @@ public interface SysMenuMapper {
     public List<SysMenu> selectMenuList(SysMenu menu);
 
     /**
-     * 新增菜单
+     * 菜单列表 <- 用户id
+     * @param userId 用户id
+     * @return
+     */
+    List<SysMenu> selectMenusByUserId(Long userId);
+
+    /**
+     * 新增菜单 <- 菜单信息
      * @param menu
      * @return
      */
     public int addMenu(SysMenu menu);
 
     /**
-     * 更新菜单
+     * 更新菜单 <- 菜单信息
      * @param menu
      * @return
      */
@@ -49,4 +56,6 @@ public interface SysMenuMapper {
      * @return 菜单信息
      */
     List<SysMenu> selectMenuByParams(SysMenu menu);
+
+
 }
