@@ -2,9 +2,11 @@ package com.example.demo.core.service.impl;
 
 import com.example.demo.common.utils.SecurityUtils;
 import com.example.demo.config.exception.MyException;
+import com.example.demo.core.entity.SysMenu;
 import com.example.demo.core.entity.SysRole;
 import com.example.demo.core.entity.SysUser;
 import com.example.demo.core.entity.SysUserRole;
+import com.example.demo.core.mapper.SysMenuMapper;
 import com.example.demo.core.mapper.SysUserMapper;
 import com.example.demo.core.mapper.SysUserRoleMapper;
 import com.example.demo.core.service.ISysUserService;
@@ -26,6 +28,9 @@ public class SysUserServiceImpl implements ISysUserService {
     @Autowired
     SysUserRoleMapper userRoleMapper;
 
+    @Autowired
+    SysMenuMapper menuMapper;
+
     @Override
     public List<SysUser> selectUserList(SysUser user) {
         return userMapper.selectUserList(user);
@@ -33,7 +38,19 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public SysUser selectUserByLoginName(String loginName) {
-        return userMapper.selectUserByLoginName(loginName);
+        SysUser user = userMapper.selectUserByLoginName(loginName);
+        List<String> menuCodes = new ArrayList<>();
+        if(user != null){
+            List<SysMenu> menus = menuMapper.selectMenusByUserId(user.getUserId());
+            for(SysMenu menu : menus){
+                String menuCode = menu.getCode();
+                if(StringUtils.hasText(menuCode)){
+                    menuCodes.add(menuCode);
+                }
+            }
+            user.setMenuCodes(menuCodes);
+        }
+        return user;
     }
 
     @Override

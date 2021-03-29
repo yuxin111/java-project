@@ -27,6 +27,7 @@ public class SysMenuController extends BaseController {
         return ResultBody.success(menuList);
     }
 
+    @RequiresPermissions("system:menu:add")
     @PostMapping("/add")
     public ResultBody addMenu(@RequestBody SysMenu menu){
         int result = menuService.addMenu(menu);
@@ -37,6 +38,7 @@ public class SysMenuController extends BaseController {
         }
     }
 
+    @RequiresPermissions("system:menu:edit")
     @PostMapping("/update")
     public ResultBody updateMenu(@RequestBody SysMenu menu){
         int result = menuService.updateMenu(menu);
@@ -47,6 +49,7 @@ public class SysMenuController extends BaseController {
         }
     }
 
+    @RequiresPermissions("system:menu:delete")
     @GetMapping("/delete/{menuId}")
     public ResultBody deleteMenu(@PathVariable Long menuId){
         int result = menuService.deleteMenuById(menuId);

@@ -23,6 +23,7 @@ public class SysUser extends BaseEntity {
 
     private Long[] roleIds;
     private List<SysRole> roles;
+    private List<String> menuCodes;
 
 //    @JsonIgnore
 //    public String getPassword() {

@@ -50,6 +50,8 @@ public class AuthRealm extends AuthorizingRealm {
         List<SysRole> roles = roleService.selectRolesByUserId(user.getUserId());
         List<SysMenu> menus = menuService.selectMenusByUserId(user.getUserId());
 
+        System.out.println(menus);
+
         for (SysRole role : roles) {
             String code = role.getCode();
             if(StringUtils.hasText(code)){

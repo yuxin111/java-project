@@ -17,6 +17,7 @@ public class SysUserController extends BaseController {
     @Autowired
     ISysUserService userService;
 
+    @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     public ResultBody getUserList(@RequestBody SysUser user){
         startPage();
@@ -30,6 +31,7 @@ public class SysUserController extends BaseController {
         return ResultBody.success(user);
     }
 
+    @RequiresPermissions("system:user:add")
     @PostMapping("/add")
     public ResultBody addUser(@RequestBody SysUser user){
         int result = userService.addUser(user);
@@ -40,6 +42,7 @@ public class SysUserController extends BaseController {
         }
     }
 
+    @RequiresPermissions("system:user:edit")
     @PostMapping("/update")
     public ResultBody updateUser(@RequestBody SysUser user){
         int result = userService.updateUser(user);
@@ -50,6 +53,7 @@ public class SysUserController extends BaseController {
         }
     }
 
+    @RequiresPermissions("system:user:delete")
     @GetMapping("/delete/{userId}")
     public ResultBody deleteUser(@PathVariable Long userId){
         int result = userService.deleteUserById(userId);

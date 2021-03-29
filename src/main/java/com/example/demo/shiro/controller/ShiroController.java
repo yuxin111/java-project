@@ -10,6 +10,9 @@ import com.example.demo.core.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class ShiroController extends BaseController {
 
@@ -32,9 +35,11 @@ public class ShiroController extends BaseController {
             resultBody.setCode(400);
             resultBody.setMessage("密码错误，请重新输入");
         } else {
+            Map<String, Object> result = tokenService.createToken(sysUser.getUserId());
+            result.put("menus", sysUser.getMenuCodes());
             resultBody.setCode(200);
             resultBody.setMessage("登录成功");
-            resultBody.setResult(tokenService.createToken(sysUser.getUserId()));
+            resultBody.setResult(result);
         }
         return resultBody;
     }

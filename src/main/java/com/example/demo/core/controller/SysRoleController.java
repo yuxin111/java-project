@@ -5,6 +5,7 @@ import com.example.demo.core.entity.ResultBody;
 import com.example.demo.core.entity.SysRole;
 import com.example.demo.core.entity.SysUser;
 import com.example.demo.core.service.ISysRoleService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ public class SysRoleController extends BaseController {
     @Autowired
     ISysRoleService roleService;
 
+    @RequiresPermissions("system:role:list")
     @PostMapping("/list")
     public ResultBody getRoleList(@RequestBody SysRole role){
         startPage();
@@ -30,6 +32,7 @@ public class SysRoleController extends BaseController {
         return ResultBody.success(role);
     }
 
+    @RequiresPermissions("system:role:add")
     @PostMapping("/add")
     public ResultBody addRole(@RequestBody SysRole role){
         int result = roleService.addRole(role);
@@ -40,6 +43,7 @@ public class SysRoleController extends BaseController {
         }
     }
 
+    @RequiresPermissions("system:role:edit")
     @PostMapping("/update")
     public ResultBody updateRole(@RequestBody SysRole role){
         int result = roleService.updateRole(role);
@@ -50,6 +54,7 @@ public class SysRoleController extends BaseController {
         }
     }
 
+    @RequiresPermissions("system:role:delete")
     @GetMapping("/delete/{roleId}")
     public ResultBody deleteRole(@PathVariable Long roleId){
         int result = roleService.deleteRoleById(roleId);
