@@ -56,7 +56,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public int deleteMenuById(Long menuId) {
         // 删除用户角色关联
-//        userRoleMapper.deleteByRoleId(roleId);
+        roleMenuMapper.deleteByMenuId(menuId);
         return menuMapper.deleteMenuById(menuId);
     }
 
