@@ -12,6 +12,20 @@ import java.util.List;
 public interface SysRoleMenuMapper {
 
     /**
+     * 角色菜单列表 <- 菜单id
+     * @param menuId 菜单id
+     * @return
+     */
+    public List<SysRoleMenu> selectRoleMenusByMenuId(Long menuId);
+
+    /**
+     * 角色菜单列表 <- 角色id
+     * @param roleId 角色id
+     * @return
+     */
+    public List<SysRoleMenu> selectRoleMenusByRoleId(Long roleId);
+
+    /**
      * 删除角色菜单数据 <- 角色id
      * @param roleId 角色id
      * @return
