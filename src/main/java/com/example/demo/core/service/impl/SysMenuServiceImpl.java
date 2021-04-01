@@ -10,8 +10,12 @@ import com.example.demo.core.mapper.SysRoleMenuMapper;
 import com.example.demo.core.mapper.SysUserRoleMapper;
 import com.example.demo.core.service.ISysMenuService;
 import com.example.demo.core.service.ISysRoleService;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
@@ -26,6 +30,11 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Autowired
     SysRoleMenuMapper roleMenuMapper;
 
+    @Autowired
+    DataSourceTransactionManager dataSourceTransactionManager;
+    @Autowired
+    TransactionDefinition transactionDefinition;
+
 
     @Override
     public List<SysMenu> selectMenuList(SysMenu menu) {
@@ -38,6 +47,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     }
 
     @Override
+    @Transactional
     public int addMenu(SysMenu menu) {
         valiMenu(menu);
         int rows = menuMapper.addMenu(menu);
@@ -48,6 +58,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     }
 
     @Override
+    @Transactional
     public int updateMenu(SysMenu menu) {
         valiMenu(menu);
         int rows = menuMapper.updateMenu(menu);
@@ -55,19 +66,12 @@ public class SysMenuServiceImpl implements ISysMenuService {
             batchRoleMenuHasParentId(menu);
         }
         return rows;
-//        return menuMapper.updateMenu(menu);
     }
 
     @Override
     @Transactional
-    public int deleteMenuById(Long menuId){
-        // 删除角色菜单关联
+    public int deleteMenuById(Long menuId) {
         roleMenuMapper.deleteByMenuId(menuId);
-        int a = 1/0;
-//        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-//        if(true){
-//            throw new RuntimeException("123");
-//        }
         return menuMapper.deleteMenuById(menuId);
     }
 
