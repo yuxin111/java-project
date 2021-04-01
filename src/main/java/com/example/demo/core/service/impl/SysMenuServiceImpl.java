@@ -13,11 +13,11 @@ import com.example.demo.core.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.List;
 
 @Service
-@Transactional
 public class SysMenuServiceImpl implements ISysMenuService {
 
     @Autowired
@@ -50,13 +50,24 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public int updateMenu(SysMenu menu) {
         valiMenu(menu);
-        return menuMapper.updateMenu(menu);
+        int rows = menuMapper.updateMenu(menu);
+        if (rows > 0) {
+            batchRoleMenuHasParentId(menu);
+        }
+        return rows;
+//        return menuMapper.updateMenu(menu);
     }
 
     @Override
-    public int deleteMenuById(Long menuId) {
-        // 删除用户角色关联
+    @Transactional
+    public int deleteMenuById(Long menuId){
+        // 删除角色菜单关联
         roleMenuMapper.deleteByMenuId(menuId);
+        int a = 1/0;
+//        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+//        if(true){
+//            throw new RuntimeException("123");
+//        }
         return menuMapper.deleteMenuById(menuId);
     }
 
