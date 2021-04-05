@@ -77,7 +77,7 @@
         update sys_menu
         <set>
             <if test="menuName != null and menuName != ''">menu_name = #{menuName},</if>
-            <if test="code != null and code != ''">code = #{code},</if>
+            <if test="code != null">code = #{code},</if>
             parent_id = #{parentId},
 <!--            <if test="status != null">status = #{status},</if>-->
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户信息表
@@ -23,7 +24,7 @@ public class SysUser extends BaseEntity {
 
     private Long[] roleIds;
     private List<SysRole> roles;
-    private List<String> menuCodes;
+    private Set<String> menuCodes;
 
 //    @JsonIgnore
 //    public String getPassword() {

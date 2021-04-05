@@ -16,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -39,7 +41,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public SysUser selectUserByLoginName(String loginName) {
         SysUser user = userMapper.selectUserByLoginName(loginName);
-        List<String> menuCodes = new ArrayList<>();
+        Set<String> menuCodes = new HashSet<>();
         if(user != null){
             List<SysMenu> menus = menuMapper.selectMenusByUserId(user.getUserId());
             for(SysMenu menu : menus){

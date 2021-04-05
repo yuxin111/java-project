@@ -18,6 +18,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -87,7 +88,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         onceTempMenu.setCode(menu.getCode());
         onceTempMenu.setMenuId(menu.getMenuId());
         menuList = menuMapper.selectMenuByParams(onceTempMenu);
-        if (menuList != null && menuList.size() > 0) {
+        if (StringUtils.hasText(menu.getCode()) && menuList != null && menuList.size() > 0) {
             throw new MyException("菜单标识不能重复");
         }
     }
