@@ -1,25 +1,17 @@
 package com.example.demo.core.handler;
 
+import com.example.demo.common.enums.CommonEnum;
 import com.example.demo.config.exception.MyException;
 import com.example.demo.core.entity.ResultBody;
-import com.example.demo.enums.CommonEnum;
-import org.apache.shiro.ShiroException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 @RestControllerAdvice

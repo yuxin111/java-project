@@ -2,7 +2,7 @@ package com.example.demo.core.entity;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.config.exception.IBaseErrorInfo;
-import com.example.demo.enums.CommonEnum;
+import com.example.demo.common.enums.CommonEnum;
 
 public class ResultBody {
 	/**

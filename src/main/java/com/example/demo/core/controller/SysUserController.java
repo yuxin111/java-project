@@ -1,6 +1,8 @@
 package com.example.demo.core.controller;
 
+import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
+import com.example.demo.common.enums.BusinessType;
 import com.example.demo.core.entity.ResultBody;
 import com.example.demo.core.entity.SysUser;
 import com.example.demo.core.service.ISysUserService;
@@ -17,6 +19,7 @@ public class SysUserController extends BaseController {
     @Autowired
     ISysUserService userService;
 
+
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     public ResultBody getUserList(@RequestBody SysUser user){
@@ -31,6 +34,7 @@ public class SysUserController extends BaseController {
         return ResultBody.success(user);
     }
 
+    @MyLog(title = "用户管理",businessType= BusinessType.INSERT)
     @RequiresPermissions("system:user:add")
     @PostMapping("/add")
     public ResultBody addUser(@RequestBody SysUser user){
@@ -42,6 +46,7 @@ public class SysUserController extends BaseController {
         }
     }
 
+    @MyLog(title = "用户管理",businessType= BusinessType.UPDATE)
     @RequiresPermissions("system:user:edit")
     @PostMapping("/update")
     public ResultBody updateUser(@RequestBody SysUser user){
@@ -53,6 +58,7 @@ public class SysUserController extends BaseController {
         }
     }
 
+    @MyLog(title = "用户管理",businessType= BusinessType.DELETE)
     @RequiresPermissions("system:user:delete")
     @GetMapping("/delete/{userId}")
     public ResultBody deleteUser(@PathVariable Long userId){
