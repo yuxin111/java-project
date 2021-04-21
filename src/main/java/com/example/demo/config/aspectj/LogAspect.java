@@ -3,6 +3,7 @@ package com.example.demo.config.aspectj;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import com.example.demo.common.annotation.MyLog;
+import com.example.demo.common.utils.ThreadManager;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -70,6 +71,12 @@ public class LogAspect
             {
                 return;
             }
+            ThreadManager.getThreadPollProxy().execute(new Runnable() {
+                @Override
+                public void run() {
+                    
+                }
+            });
 
 //            // 获取当前的用户
 //            SysUser currentUser = ShiroUtils.getSysUser();
