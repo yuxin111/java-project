@@ -20,6 +20,7 @@ public class SysUserController extends BaseController {
     ISysUserService userService;
 
 
+    @MyLog(title = "用户管理",businessType= BusinessType.OTHER)
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     public ResultBody getUserList(@RequestBody SysUser user){

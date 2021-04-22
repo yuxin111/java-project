@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.utils.ThreadManager;
+import com.example.demo.config.async.AsyncTask;
+import com.example.demo.config.executor.ExecutorConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -11,12 +14,10 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * 操作日志记录处理
@@ -25,9 +26,11 @@ import java.util.Map;
  */
 @Aspect
 @Component
+@Slf4j
 public class LogAspect
 {
-    private static final Logger log = LoggerFactory.getLogger(com.example.demo.config.aspectj.LogAspect.class);
+    @Autowired
+    private AsyncTask asyncTask;
 
     /** 排除敏感属性字段 */
     public static final String[] EXCLUDE_PROPERTIES = { "password", "oldPassword", "newPassword", "confirmPassword" };
@@ -71,12 +74,15 @@ public class LogAspect
             {
                 return;
             }
-            ThreadManager.getThreadPollProxy().execute(new Runnable() {
-                @Override
-                public void run() {
-                    
-                }
-            });
+//            ThreadManager.getThreadPollProxy().execute(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                }
+//            });
+
+            asyncTask.dealNoReturnTask();
+
 
 //            // 获取当前的用户
 //            SysUser currentUser = ShiroUtils.getSysUser();
