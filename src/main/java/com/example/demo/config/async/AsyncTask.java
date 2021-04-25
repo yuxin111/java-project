@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class AsyncTask {
 
-    @Async
+    @Async("selfServiceExecutor")
     public void dealNoReturnTask(){
         log.info("Thread {} deal No Return Task start", Thread.currentThread().getName());
         try {
