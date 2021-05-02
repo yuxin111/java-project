@@ -1,7 +1,5 @@
 package com.example.demo.common.annotation;
 
-import com.example.demo.common.enums.BusinessType;
-
 import java.lang.annotation.*;
 
 /**
@@ -17,11 +15,6 @@ public @interface MyLog
     /**
      * 模块 
      */
-    public String title() default "";
-
-    /**
-     * 功能
-     */
-    public BusinessType businessType() default BusinessType.OTHER;
+    public String value() default "";
 
 }

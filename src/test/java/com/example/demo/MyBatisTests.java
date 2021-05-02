@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.alibaba.fastjson.JSON;
 import com.example.demo.core.entity.SysToken;
 import com.example.demo.core.mapper.SysTokenMapper;
 import com.example.demo.core.mapper.SysUserMapper;
@@ -34,6 +35,7 @@ class MyBatisTests {
 
     @Test
    public void testJson(){
+        JSON.toJSONString(null);
 //        Map<String, Object> result = new HashMap<>();
 //        result.put("status", 403);
 //        result.put("msg", "登录凭证已失效，请重新登录");

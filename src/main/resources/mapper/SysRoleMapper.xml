@@ -88,13 +88,13 @@
         insert into sys_role(
         <if test="roleName != null and roleName != ''">role_name,</if>
         <if test="code != null and code != ''">code,</if>
-        <if test="status != null and status != ''">status,</if>
+        <if test="status != null">status,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         )values(
         <if test="roleName != null and roleName != ''">#{roleName},</if>
         <if test="code != null and code != ''">#{code},</if>
-        <if test="status != null and status != ''">#{status},</if>
+        <if test="status != null">#{status},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )

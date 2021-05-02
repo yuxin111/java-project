@@ -2,7 +2,6 @@ package com.example.demo.core.controller;
 
 import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
-import com.example.demo.common.enums.BusinessType;
 import com.example.demo.core.entity.ResultBody;
 import com.example.demo.core.entity.SysUser;
 import com.example.demo.core.service.ISysUserService;
@@ -20,7 +19,7 @@ public class SysUserController extends BaseController {
     ISysUserService userService;
 
 
-    @MyLog(title = "用户管理",businessType= BusinessType.OTHER)
+    @MyLog("查看用户列表")
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     public ResultBody getUserList(@RequestBody SysUser user){
@@ -35,7 +34,7 @@ public class SysUserController extends BaseController {
         return ResultBody.success(user);
     }
 
-    @MyLog(title = "用户管理",businessType= BusinessType.INSERT)
+    @MyLog("用户管理")
     @RequiresPermissions("system:user:add")
     @PostMapping("/add")
     public ResultBody addUser(@RequestBody SysUser user){
@@ -47,7 +46,7 @@ public class SysUserController extends BaseController {
         }
     }
 
-    @MyLog(title = "用户管理",businessType= BusinessType.UPDATE)
+    @MyLog("用户管理")
     @RequiresPermissions("system:user:edit")
     @PostMapping("/update")
     public ResultBody updateUser(@RequestBody SysUser user){
@@ -59,7 +58,7 @@ public class SysUserController extends BaseController {
         }
     }
 
-    @MyLog(title = "用户管理",businessType= BusinessType.DELETE)
+    @MyLog("用户管理")
     @RequiresPermissions("system:user:delete")
     @GetMapping("/delete/{userId}")
     public ResultBody deleteUser(@PathVariable Long userId){
