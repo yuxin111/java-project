@@ -18,4 +18,11 @@ public interface SysOperLogMapper {
      */
     public int addOperLog(SysOperLog operLog);
 
+    /**
+     * 操作日志列表 <- 操作日志信息
+     *
+     * @param operLog 操作日志信息
+     * @return 操作日志信息列表
+     */
+    public List<SysOperLog> selectOperLogList(SysOperLog operLog);
 }

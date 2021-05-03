@@ -18,8 +18,6 @@ public class SysUserController extends BaseController {
     @Autowired
     ISysUserService userService;
 
-
-    @MyLog("查看用户列表")
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     public ResultBody getUserList(@RequestBody SysUser user){
@@ -34,7 +32,6 @@ public class SysUserController extends BaseController {
         return ResultBody.success(user);
     }
 
-    @MyLog("用户管理")
     @RequiresPermissions("system:user:add")
     @PostMapping("/add")
     public ResultBody addUser(@RequestBody SysUser user){
@@ -46,7 +43,6 @@ public class SysUserController extends BaseController {
         }
     }
 
-    @MyLog("用户管理")
     @RequiresPermissions("system:user:edit")
     @PostMapping("/update")
     public ResultBody updateUser(@RequestBody SysUser user){
@@ -58,7 +54,6 @@ public class SysUserController extends BaseController {
         }
     }
 
-    @MyLog("用户管理")
     @RequiresPermissions("system:user:delete")
     @GetMapping("/delete/{userId}")
     public ResultBody deleteUser(@PathVariable Long userId){

@@ -96,7 +96,6 @@ public class LogAspect {
             }
 
             asyncTask.recordOperLog(operLog);
-            System.out.println("已完成");
         } catch (Exception exp) {
             // 记录本地异常日志
             log.error("==记录本地异常日志异常==");
