@@ -34,4 +34,9 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
         return operLogMapper.selectOperLogList(operLog);
     }
 
+    @Override
+    public SysOperLog selectOperLogById(Long operLogId) {
+        return operLogMapper.selectOperLogById(operLogId);
+    }
+
 }

@@ -22,4 +22,11 @@ public interface ISysOperLogService {
      * @return
      */
     public List<SysOperLog> selectOperLogList(SysOperLog operLog);
+
+    /**
+     * 操作日志列表 <- 操作日志id
+     * @param operLogId 操作日志id
+     * @return
+     */
+    public SysOperLog selectOperLogById(Long operLogId);
 }

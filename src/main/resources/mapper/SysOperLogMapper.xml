@@ -27,6 +27,11 @@
         <include refid="selectOperLogVo"/>
     </select>
 
+    <select id="selectOperLogById" parameterType="Long" resultMap="SysOperLogResult">
+        <include refid="selectOperLogVo"/>
+        where ol.oper_log_id = #{operLogId}
+    </select>
+
     <insert id="addOperLog" parameterType="com.example.demo.core.entity.SysOperLog" useGeneratedKeys="true"
             keyProperty="operLogId">
         insert into sys_oper_log(

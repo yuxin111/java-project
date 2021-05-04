@@ -9,16 +9,13 @@ import com.example.demo.core.service.ISysOperLogService;
 import com.example.demo.core.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/operLog")
-public class SystemOperLogController extends BaseController {
+public class SysOperLogController extends BaseController {
 
     @Autowired
     ISysOperLogService operLogService;
@@ -29,5 +26,11 @@ public class SystemOperLogController extends BaseController {
         startPage();
         List<SysOperLog> operLogList = operLogService.selectOperLogList(operLog);
         return getDataTable(operLogList);
+    }
+
+    @GetMapping("/get/{operLogId}")
+    public ResultBody getUserList(@PathVariable("operLogId") Long operLogId){
+        SysOperLog operLog = operLogService.selectOperLogById(operLogId);
+        return ResultBody.success(operLog);
     }
 }

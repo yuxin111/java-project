@@ -13,10 +13,10 @@ public enum CommonEnum implements IBaseErrorInfo {
 	;
 
 	/** 错误码 */
-	private int resultCode;
+	private final int resultCode;
 
 	/** 错误描述 */
-	private String resultMsg;
+	private final String resultMsg;
 
 	CommonEnum(int resultCode, String resultMsg) {
 		this.resultCode = resultCode;
