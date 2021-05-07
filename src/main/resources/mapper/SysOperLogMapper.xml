@@ -25,6 +25,7 @@
 
     <select id="selectOperLogList" parameterType="com.example.demo.core.entity.SysOperLog" resultMap="SysOperLogResult">
         <include refid="selectOperLogVo"/>
+        order by ol.create_time desc
     </select>
 
     <select id="selectOperLogById" parameterType="Long" resultMap="SysOperLogResult">

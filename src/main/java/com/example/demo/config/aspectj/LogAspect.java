@@ -32,7 +32,7 @@ import java.util.Date;
 /**
  * 操作日志记录处理
  *
- * @author ruoyi
+ * @author yuxin
  */
 @Aspect
 @Component
@@ -40,11 +40,6 @@ import java.util.Date;
 public class LogAspect {
     @Autowired
     private AsyncTask asyncTask;
-
-    /**
-     * 排除敏感属性字段
-     */
-    public static final String[] EXCLUDE_PROPERTIES = {"password", "oldPassword", "newPassword", "confirmPassword"};
 
     // 配置织入点
     @Pointcut("@annotation(com.example.demo.common.annotation.MyLog)")

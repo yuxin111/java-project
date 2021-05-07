@@ -39,7 +39,9 @@
         from sys_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
+			 left join sys_role r on ur.role_id = r.role_id
 	    where ur.user_id = #{userId}
+	    and r.status = 1
     </select>
 
     <select id="selectMenuByParams" parameterType="com.example.demo.core.entity.SysMenu" resultMap="SysMenuResult">

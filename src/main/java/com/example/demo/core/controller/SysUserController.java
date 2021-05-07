@@ -32,6 +32,7 @@ public class SysUserController extends BaseController {
         return ResultBody.success(user);
     }
 
+    @MyLog("新增用户")
     @RequiresPermissions("system:user:add")
     @PostMapping("/add")
     public ResultBody addUser(@RequestBody SysUser user){
@@ -43,6 +44,7 @@ public class SysUserController extends BaseController {
         }
     }
 
+    @MyLog("更新用户")
     @RequiresPermissions("system:user:edit")
     @PostMapping("/update")
     public ResultBody updateUser(@RequestBody SysUser user){
@@ -54,6 +56,7 @@ public class SysUserController extends BaseController {
         }
     }
 
+    @MyLog("删除用户")
     @RequiresPermissions("system:user:delete")
     @GetMapping("/delete/{userId}")
     public ResultBody deleteUser(@PathVariable Long userId){

@@ -1,5 +1,6 @@
 package com.example.demo.core.controller;
 
+import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.core.entity.ResultBody;
 import com.example.demo.core.entity.SysRole;
@@ -32,6 +33,7 @@ public class SysRoleController extends BaseController {
         return ResultBody.success(role);
     }
 
+    @MyLog("新增角色")
     @RequiresPermissions("system:role:add")
     @PostMapping("/add")
     public ResultBody addRole(@RequestBody SysRole role){
@@ -43,6 +45,7 @@ public class SysRoleController extends BaseController {
         }
     }
 
+    @MyLog("更新角色")
     @RequiresPermissions("system:role:edit")
     @PostMapping("/update")
     public ResultBody updateRole(@RequestBody SysRole role){
@@ -54,6 +57,7 @@ public class SysRoleController extends BaseController {
         }
     }
 
+    @MyLog("删除角色")
     @RequiresPermissions("system:role:delete")
     @GetMapping("/delete/{roleId}")
     public ResultBody deleteRole(@PathVariable Long roleId){

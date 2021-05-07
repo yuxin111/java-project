@@ -1,5 +1,6 @@
 package com.example.demo.core.controller;
 
+import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.core.entity.ResultBody;
 import com.example.demo.core.entity.SysMenu;
@@ -25,6 +26,7 @@ public class SysMenuController extends BaseController {
         return ResultBody.success(menuList);
     }
 
+    @MyLog("新增菜单")
     @RequiresPermissions("system:menu:add")
     @PostMapping("/add")
     public ResultBody addMenu(@RequestBody SysMenu menu){
@@ -36,6 +38,7 @@ public class SysMenuController extends BaseController {
         }
     }
 
+    @MyLog("更新菜单")
     @RequiresPermissions("system:menu:edit")
     @PostMapping("/update")
     public ResultBody updateMenu(@RequestBody SysMenu menu){
@@ -47,6 +50,7 @@ public class SysMenuController extends BaseController {
         }
     }
 
+    @MyLog("删除菜单")
     @RequiresPermissions("system:menu:delete")
     @GetMapping("/delete/{menuId}")
     public ResultBody deleteMenu(@PathVariable Long menuId){
