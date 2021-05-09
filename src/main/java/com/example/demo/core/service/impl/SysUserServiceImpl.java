@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
 public class SysUserServiceImpl implements ISysUserService {
 
     @Autowired
@@ -61,6 +60,7 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
+    @Transactional
     public int addUser(SysUser user) {
         if(StringUtils.hasText(user.getPassword())){
             user.setPassword(SecurityUtils.md5(user.getPassword()));
@@ -81,9 +81,8 @@ public class SysUserServiceImpl implements ISysUserService {
         return rows;
     }
 
-
-
     @Override
+    @Transactional
     public int updateUser(SysUser user) {
         if(StringUtils.hasText(user.getPassword())){
             user.setPassword(SecurityUtils.md5(user.getPassword()));
@@ -97,16 +96,19 @@ public class SysUserServiceImpl implements ISysUserService {
         if(userList != null && userList.size() > 0){
             throw new MyException("登录账号不能重复");
         }
-        // 删除原有用户角色关联
-        userRoleMapper.deleteByUserId(user.getUserId());
 
-        // 新增用户角色关联
-        batchUserRole(user.getUserId(),user.getRoleIds());
+        if(user.getRoleIds() != null){
+            // 删除原有用户角色关联
+            userRoleMapper.deleteByUserId(user.getUserId());
+            // 新增用户角色关联
+            batchUserRole(user.getUserId(),user.getRoleIds());
+        }
 
         return userMapper.updateUser(user);
     }
 
     @Override
+    @Transactional
     public int deleteUserById(Long userId) {
         // 删除用户关联角色
         userRoleMapper.deleteByUserId(userId);

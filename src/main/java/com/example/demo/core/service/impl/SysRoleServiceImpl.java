@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
+
 public class SysRoleServiceImpl implements ISysRoleService {
 
     @Autowired
@@ -47,6 +47,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
+    @Transactional
     public int addRole(SysRole role) {
         valiRole(role);
         int rows = roleMapper.addRole(role);
@@ -58,14 +59,16 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
+    @Transactional
     public int updateRole(SysRole role) {
         valiRole(role);
 
-        // 删除原有角色菜单关联
-        roleMenuMapper.deleteByRoleId(role.getRoleId());
-
-        // 新增角色菜单关联
-        batchRoleMenu(role.getRoleId(),role.getMenuIds());
+        if(role.getMenuIds() != null){
+            // 删除原有角色菜单关联
+            roleMenuMapper.deleteByRoleId(role.getRoleId());
+            // 新增角色菜单关联
+            batchRoleMenu(role.getRoleId(),role.getMenuIds());
+        }
 
         return roleMapper.updateRole(role);
     }
@@ -73,6 +76,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
 
     @Override
+    @Transactional
     public int deleteRoleById(Long roleId) {
         // 删除用户角色关联
         userRoleMapper.deleteByRoleId(roleId);
@@ -90,18 +94,22 @@ public class SysRoleServiceImpl implements ISysRoleService {
         SysRole onceTempRole = new SysRole();
         SysRole secondTempRole = new SysRole();
 
-        onceTempRole.setRoleName(role.getRoleName());
-        onceTempRole.setRoleId(role.getRoleId());
-        roleList = roleMapper.selectRolesByParams(onceTempRole);
-        if(roleList != null && roleList.size() > 0){
-            throw new MyException("角色名称不能重复");
+        if(StringUtils.hasText(role.getRoleName())){
+            onceTempRole.setRoleName(role.getRoleName());
+            onceTempRole.setRoleId(role.getRoleId());
+            roleList = roleMapper.selectRolesByParams(onceTempRole);
+            if(roleList != null && roleList.size() > 0){
+                throw new MyException("角色名称不能重复");
+            }
         }
 
-        secondTempRole.setCode(role.getCode());
-        secondTempRole.setRoleId(role.getRoleId());
-        roleList = roleMapper.selectRolesByParams(secondTempRole);
-        if(roleList != null && roleList.size() > 0){
-            throw new MyException("角色代码不能重复");
+        if(StringUtils.hasText(role.getCode())){
+            secondTempRole.setCode(role.getCode());
+            secondTempRole.setRoleId(role.getRoleId());
+            roleList = roleMapper.selectRolesByParams(secondTempRole);
+            if(roleList != null && roleList.size() > 0){
+                throw new MyException("角色代码不能重复");
+            }
         }
     }
 

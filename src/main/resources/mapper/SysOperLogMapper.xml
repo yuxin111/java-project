@@ -25,6 +25,17 @@
 
     <select id="selectOperLogList" parameterType="com.example.demo.core.entity.SysOperLog" resultMap="SysOperLogResult">
         <include refid="selectOperLogVo"/>
+        <where>
+            <if test="operLog != null and operLog != ''">
+                and ol.oper_log like concat('%', #{operLog}, '%')
+            </if>
+            <if test="status != null">
+                and ol.status = #{status}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and u.login_name like concat('%', #{loginName}, '%')
+            </if>
+        </where>
         order by ol.create_time desc
     </select>
 
