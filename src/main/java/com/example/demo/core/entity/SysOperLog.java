@@ -37,5 +37,9 @@ public class SysOperLog implements Serializable {
     private Date createTime;
 
     private String loginName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createBeginTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createEndTime;
 
 }
