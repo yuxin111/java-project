@@ -10,6 +10,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,7 @@ public class SysMenuController extends BaseController {
 
     @RequiresPermissions("system:menu:list")
     @PostMapping("/list")
-    public ResultBody getMenuList(@RequestBody SysMenu menu){
+    public ResultBody getMenuList(HttpServletRequest request, @RequestBody SysMenu menu){
         List<SysMenu> menuList = menuService.selectMenuList(menu);
         return ResultBody.success(menuList);
     }

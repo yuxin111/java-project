@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.enums.BusinessStatus;
+import com.example.demo.common.utils.ServletUtils;
 import com.example.demo.common.utils.ShiroUtils;
 import com.example.demo.common.utils.ThreadManager;
 import com.example.demo.config.async.AsyncTask;
@@ -27,7 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 操作日志记录处理
@@ -83,11 +86,23 @@ public class LogAspect {
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
             operLog.setCreateTime(new Date());
             operLog.setOperLog(myLog.value());
-            operLog.setJsonResult(StringUtils.substring(JSON.toJSONString(jsonResult),0,2000));
+            operLog.setJsonResult(StringUtils.substring(JSON.toJSONString(jsonResult), 0, 2000));
+//            setRequestValue(operLog);
+
+            StringBuilder sb = new StringBuilder();
+            Object[] args = joinPoint.getArgs();
+            StringBuilder stringBuilder = new StringBuilder();
+            Arrays.stream(args).forEach(object -> stringBuilder.append(object.toString().replace("=",":")));
+            if (stringBuilder.length() == 0){
+                stringBuilder.append("{}");
+            }
+            sb.append("请求参数:" + stringBuilder.toString());
+            System.out.println(Arrays.toString(args));
+            System.out.println(sb.toString());
 
             if (e != null) {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());
-                operLog.setErrorMsg(StringUtils.substring(e.getMessage(),0,2000));
+                operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
 
             asyncTask.recordOperLog(operLog);
@@ -111,5 +126,21 @@ public class LogAspect {
             return method.getAnnotation(MyLog.class);
         }
         return null;
+    }
+
+    /**
+     * 获取请求的参数，放到log中
+     *
+     * @param operLog 操作日志
+     */
+    private void setRequestValue(SysOperLog operLog){
+        Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
+        System.out.println(map.toString());
+        if (map != null && !map.isEmpty()) {
+            PropertyPreFilters.MySimplePropertyPreFilter excludefilter = new PropertyPreFilters().addFilter();
+//            excludefilter.addExcludes(EXCLUDE_PROPERTIES);
+            String params = JSONObject.toJSONString(map, excludefilter);
+            operLog.setRequestParams(StringUtils.substring(params, 0, 2000));
+        }
     }
 }

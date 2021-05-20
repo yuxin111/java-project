@@ -17,6 +17,9 @@ public class SysOperLog implements Serializable {
 
     private Long operLogId;
 
+    /* 请求参数 */
+    private String requestParams;
+
     /* 操作日志 */
     private String operLog;
 

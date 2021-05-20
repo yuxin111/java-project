@@ -18,6 +18,7 @@ public class SysUserController extends BaseController {
     @Autowired
     ISysUserService userService;
 
+    @MyLog("查看用户列表")
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     public ResultBody getUserList(@RequestBody SysUser user){
