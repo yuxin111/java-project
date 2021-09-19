@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: my-java-project
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://gz-cdb-11om9s8x.sql.tencentcdb.com:59171/test?serverTimezone=GMT%2B8&useSSL=true
+    username: root
+    password: Yuxin1995
+
+server:
+  port: 8888
+  servlet:
+    context-path: '/api'
+  tomcat:
+    uri-encoding: UTF-8
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

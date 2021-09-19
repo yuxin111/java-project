@@ -89,16 +89,16 @@ public class LogAspect {
             operLog.setJsonResult(StringUtils.substring(JSON.toJSONString(jsonResult), 0, 2000));
 //            setRequestValue(operLog);
 
-            StringBuilder sb = new StringBuilder();
-            Object[] args = joinPoint.getArgs();
-            StringBuilder stringBuilder = new StringBuilder();
-            Arrays.stream(args).forEach(object -> stringBuilder.append(object.toString().replace("=",":")));
-            if (stringBuilder.length() == 0){
-                stringBuilder.append("{}");
-            }
-            sb.append("请求参数:" + stringBuilder.toString());
-            System.out.println(Arrays.toString(args));
-            System.out.println(sb.toString());
+//            StringBuilder sb = new StringBuilder();
+//            Object[] args = joinPoint.getArgs();
+//            StringBuilder stringBuilder = new StringBuilder();
+//            Arrays.stream(args).forEach(object -> stringBuilder.append(object.toString().replace("=",":")));
+//            if (stringBuilder.length() == 0){
+//                stringBuilder.append("{}");
+//            }
+//            sb.append("请求参数:" + stringBuilder.toString());
+//            System.out.println(Arrays.toString(args));
+//            System.out.println(sb.toString());
 
             if (e != null) {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());
