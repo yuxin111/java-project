@@ -3,9 +3,15 @@ package com.example.demo.elasticsearch.config;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.convert.Jsr310Converters;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
+import org.springframework.data.elasticsearch.core.convert.ElasticsearchCustomConversions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Desc elasticsearch配置
@@ -23,4 +29,5 @@ public class EsConfig extends AbstractElasticsearchConfiguration {
                 .build();
         return RestClients.create(clientConfiguration).rest();
     }
+
 }

@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
  **/
 @Repository
 public interface ArticleRepository extends ElasticsearchRepository<ArticleEntity,String> {
+//    Page<ArticleEntity> findByTitleAndContent(Pageable)
 }

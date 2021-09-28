@@ -9,7 +9,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 
+import javax.xml.transform.Result;
 import java.util.List;
 
 /**
@@ -34,12 +36,30 @@ public class BaseController {
     /**
      * 响应请求分页数据
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    protected ResultBody getDataTable(List<?> list)
-    {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    protected ResultBody getDataTable(List<?> list) {
         TableDataInfo tableDataInfo = new TableDataInfo();
         tableDataInfo.setData(list);
         tableDataInfo.setTotal(new PageInfo(list).getTotal());
+
+        ResultBody resultBody = new ResultBody();
+        resultBody.setCode(CommonEnum.SUCCESS.getResultCode());
+        resultBody.setMessage("查询成功");
+        resultBody.setResult(tableDataInfo);
+        return resultBody;
+    }
+
+    /**
+     * 根据Page封装分页返回结果
+     * @param: [page]
+     * @return: com.example.demo.core.entity.ResultBody
+     * @author: yuxin
+     * @date: 2021/9/28
+     */
+    protected ResultBody getDataTable(Page<?> page) {
+        TableDataInfo tableDataInfo = new TableDataInfo();
+        tableDataInfo.setData(page.getContent());
+        tableDataInfo.setTotal(page.getTotalElements());
 
         ResultBody resultBody = new ResultBody();
         resultBody.setCode(CommonEnum.SUCCESS.getResultCode());
