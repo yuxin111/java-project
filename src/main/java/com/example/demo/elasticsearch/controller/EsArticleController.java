@@ -33,22 +33,24 @@ public class EsArticleController extends BaseController {
     private ArticleRepository articleRepository;
 
     @MyLog("新增文章")
+    @RequiresPermissions("article:operArticle:add")
     @PostMapping("/add")
-    public ResultBody addArticle(@RequestBody ArticleEntity article){
+    public ResultBody addArticle(@RequestBody ArticleEntity article) {
         article.setUpdateTime(LocalDateTime.now());
         articleRepository.save(article);
         return ResultBody.success("新增文章成功");
     }
 
     @MyLog("更新文章")
+    @RequiresPermissions("article:operArticle:edit")
     @PostMapping("/update")
-    public ResultBody updateArticle(@RequestBody ArticleEntity article){
+    public ResultBody updateArticle(@RequestBody ArticleEntity article) {
         articleRepository.save(article);
         return ResultBody.success("更新文章成功");
     }
 
     @GetMapping("/get/{articleId}")
-    public ResultBody getUserList(@PathVariable("articleId") String articleId){
+    public ResultBody getUserList(@PathVariable("articleId") String articleId) {
         Optional<ArticleEntity> articleEntity = articleRepository.findById(articleId);
         return ResultBody.success(articleEntity.get());
     }
@@ -58,13 +60,17 @@ public class EsArticleController extends BaseController {
         PageDomain pageDomain = TableSupport.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum();
         Integer pageSize = pageDomain.getPageSize();
-        Pageable pageable = PageRequest.of(pageNum - 1,pageSize);
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
         Page<ArticleEntity> articleEntities = articleRepository.findAll(pageable);
         return getDataTable(articleEntities);
     }
 
+    @MyLog("删除文章")
+    @RequiresPermissions("article:operArticle:delete")
     @GetMapping("/delete/{id}")
-    public void deleteArticle(@PathVariable String id) {
+    public ResultBody deleteUser(@PathVariable String id) {
         articleRepository.deleteById(id);
+        return ResultBody.success("删除文章成功");
     }
+
 }
