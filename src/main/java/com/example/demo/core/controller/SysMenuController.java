@@ -20,7 +20,7 @@ public class SysMenuController extends BaseController {
     @Autowired
     ISysMenuService menuService;
 
-    @RequiresPermissions("system:menu:list")
+//    @RequiresPermissions("system:menu:list")
     @PostMapping("/list")
     public ResultBody getMenuList(HttpServletRequest request, @RequestBody SysMenu menu){
         List<SysMenu> menuList = menuService.selectMenuList(menu);

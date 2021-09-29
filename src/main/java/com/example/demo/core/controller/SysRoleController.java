@@ -19,7 +19,7 @@ public class SysRoleController extends BaseController {
     @Autowired
     ISysRoleService roleService;
 
-    @RequiresPermissions("system:role:list")
+//    @RequiresPermissions("system:role:list")
     @PostMapping("/list")
     public ResultBody getRoleList(@RequestBody SysRole role){
         startPage();
