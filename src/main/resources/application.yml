@@ -18,3 +18,6 @@ server:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+
+es:
+  address: localhost:9200

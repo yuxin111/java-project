@@ -37,6 +37,7 @@ public class EsArticleController extends BaseController {
     @PostMapping("/add")
     public ResultBody addArticle(@RequestBody ArticleEntity article) {
         article.setUpdateTime(LocalDateTime.now());
+        article.setCreateTime(LocalDateTime.now());
         articleRepository.save(article);
         return ResultBody.success("新增文章成功");
     }
@@ -45,6 +46,7 @@ public class EsArticleController extends BaseController {
     @RequiresPermissions("article:operArticle:edit")
     @PostMapping("/update")
     public ResultBody updateArticle(@RequestBody ArticleEntity article) {
+        article.setUpdateTime(LocalDateTime.now());
         articleRepository.save(article);
         return ResultBody.success("更新文章成功");
     }

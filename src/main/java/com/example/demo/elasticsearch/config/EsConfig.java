@@ -1,6 +1,7 @@
 package com.example.demo.elasticsearch.config;
 
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -21,11 +22,13 @@ import java.util.List;
  **/
 @Configuration
 public class EsConfig extends AbstractElasticsearchConfiguration {
+    @Value("${es.address}")
+    private String esAddress;
     @Bean
     @Override
     public RestHighLevelClient elasticsearchClient(){
         ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-                .connectedTo("192.168.1.114:9200")
+                .connectedTo(esAddress)
                 .build();
         return RestClients.create(clientConfiguration).rest();
     }
