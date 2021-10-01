@@ -1,5 +1,6 @@
 package com.example.demo.core.controller;
 
+import com.example.demo.common.annotation.AllowDevPass;
 import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.core.entity.ResultBody;
@@ -20,6 +21,7 @@ public class SysOperLogController extends BaseController {
     @Autowired
     ISysOperLogService operLogService;
 
+    @AllowDevPass
     @RequiresPermissions("log:operLog:list")
     @PostMapping("/list")
     public ResultBody getOperLogList(@RequestBody SysOperLog operLog){

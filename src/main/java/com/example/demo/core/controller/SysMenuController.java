@@ -1,5 +1,6 @@
 package com.example.demo.core.controller;
 
+import com.example.demo.common.annotation.AllowDevPass;
 import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.core.entity.ResultBody;
@@ -20,7 +21,7 @@ public class SysMenuController extends BaseController {
     @Autowired
     ISysMenuService menuService;
 
-//    @RequiresPermissions("system:menu:list")
+    @AllowDevPass
     @PostMapping("/list")
     public ResultBody getMenuList(HttpServletRequest request, @RequestBody SysMenu menu){
         List<SysMenu> menuList = menuService.selectMenuList(menu);

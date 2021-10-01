@@ -1,5 +1,6 @@
 package com.example.demo.core.controller;
 
+import com.example.demo.common.annotation.AllowDevPass;
 import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.core.entity.ResultBody;
@@ -19,7 +20,7 @@ public class SysUserController extends BaseController {
     ISysUserService userService;
 
     @MyLog("查看用户列表")
-//    @RequiresPermissions("system:user:list")
+    @AllowDevPass
     @PostMapping("/list")
     public ResultBody getUserList(@RequestBody SysUser user){
         startPage();
@@ -27,6 +28,7 @@ public class SysUserController extends BaseController {
         return getDataTable(userList);
     }
 
+    @AllowDevPass
     @GetMapping("/get/{userId}")
     public ResultBody getUserList(@PathVariable("userId") Long userId){
         SysUser user = userService.selectUserById(userId);

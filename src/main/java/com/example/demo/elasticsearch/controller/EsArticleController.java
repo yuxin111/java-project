@@ -1,5 +1,6 @@
 package com.example.demo.elasticsearch.controller;
 
+import com.example.demo.common.annotation.AllowDevPass;
 import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.common.page.PageDomain;
@@ -51,12 +52,14 @@ public class EsArticleController extends BaseController {
         return ResultBody.success("更新文章成功");
     }
 
+    @AllowDevPass
     @GetMapping("/get/{articleId}")
     public ResultBody getUserList(@PathVariable("articleId") String articleId) {
         Optional<ArticleEntity> articleEntity = articleRepository.findById(articleId);
         return ResultBody.success(articleEntity.get());
     }
 
+    @AllowDevPass
     @PostMapping("/findAll")
     public ResultBody findAll() {
         PageDomain pageDomain = TableSupport.buildPageRequest();

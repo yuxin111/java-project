@@ -1,5 +1,6 @@
 package com.example.demo.core.controller;
 
+import com.example.demo.common.annotation.AllowDevPass;
 import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.core.entity.ResultBody;
@@ -19,7 +20,7 @@ public class SysRoleController extends BaseController {
     @Autowired
     ISysRoleService roleService;
 
-//    @RequiresPermissions("system:role:list")
+    @AllowDevPass
     @PostMapping("/list")
     public ResultBody getRoleList(@RequestBody SysRole role){
         startPage();
@@ -27,6 +28,7 @@ public class SysRoleController extends BaseController {
         return getDataTable(roleList);
     }
 
+    @AllowDevPass
     @GetMapping("/get/{roleId}")
     public ResultBody getRoleList(@PathVariable("roleId") Long roleId){
         SysRole role = roleService.selectRoleById(roleId);
