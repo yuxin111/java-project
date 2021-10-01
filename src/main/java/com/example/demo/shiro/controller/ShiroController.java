@@ -1,5 +1,6 @@
 package com.example.demo.shiro.controller;
 
+import com.example.demo.common.annotation.AllowDevPass;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.common.utils.SecurityUtils;
 import com.example.demo.core.entity.ResultBody;
@@ -22,6 +23,7 @@ public class ShiroController extends BaseController {
     @Autowired
     ISysTokenService tokenService;
 
+    @AllowDevPass
     @PostMapping("/shiro/login")
     public ResultBody login(@RequestBody UserDto userDto) {
         String username = userDto.getUsername();

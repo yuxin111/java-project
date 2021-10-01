@@ -1,3 +1,6 @@
+# demonstrate、dev
+mode: demonstrate
+
 spring:
   application:
     name: my-java-project
