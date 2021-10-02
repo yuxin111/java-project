@@ -30,6 +30,7 @@ public class SysOperLogController extends BaseController {
         return getDataTable(operLogList);
     }
 
+    @AllowDevPass
     @GetMapping("/get/{operLogId}")
     public ResultBody getUserList(@PathVariable("operLogId") Long operLogId){
         SysOperLog operLog = operLogService.selectOperLogById(operLogId);

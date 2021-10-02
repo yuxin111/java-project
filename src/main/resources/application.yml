@@ -25,4 +25,4 @@ mybatis:
 es:
   address: 127.0.0.1:9200
 
-whitelist: 127.0.0.1,0:0:0:0:0:0:0:1
+whitelist: 119.29.197.72

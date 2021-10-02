@@ -36,10 +36,10 @@ public class IpInterceptor implements HandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        String ipAddr = IPUtils.getRealIP(request);
+        String serverName = request.getServerName();
         ArrayList<String> whitelist = new ArrayList<>();
         Collections.addAll(whitelist, whitelistStr.split(","));
-        if (whitelist.contains(ipAddr)) {
+        if (whitelist.contains(serverName)) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
             if (!method.isAnnotationPresent(AllowDevPass.class)) {
