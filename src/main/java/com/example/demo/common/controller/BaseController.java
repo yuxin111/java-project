@@ -68,4 +68,23 @@ public class BaseController {
         return resultBody;
     }
 
+    /**
+     * 根据list和total封装分页返回结果
+     * @param: [page]
+     * @return: com.example.demo.core.entity.ResultBody
+     * @author: yuxin
+     * @date: 2021/10/2
+     */
+    protected ResultBody getDataTable(List<?> list,Integer total) {
+        TableDataInfo tableDataInfo = new TableDataInfo();
+        tableDataInfo.setData(list);
+        tableDataInfo.setTotal(total);
+
+        ResultBody resultBody = new ResultBody();
+        resultBody.setCode(CommonEnum.SUCCESS.getResultCode());
+        resultBody.setMessage("查询成功");
+        resultBody.setResult(tableDataInfo);
+        return resultBody;
+    }
+
 }
