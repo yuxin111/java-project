@@ -6,10 +6,14 @@ import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.common.page.PageDomain;
 import com.example.demo.common.page.TableSupport;
+import com.example.demo.common.utils.ServletUtils;
+import com.example.demo.config.FileConfig;
+import com.example.demo.config.exception.MyException;
 import com.example.demo.core.entity.ResultBody;
 import com.example.demo.elasticsearch.dao.ArticleRepository;
 import com.example.demo.elasticsearch.dto.ArticleDTO;
 import com.example.demo.elasticsearch.entity.ArticleEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.*;
@@ -23,7 +27,11 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -33,6 +41,7 @@ import java.util.*;
  * @Author YuXin
  * @Date 2021/9/14
  **/
+@Slf4j
 @RestController
 @RequestMapping("/article")
 public class EsArticleController extends BaseController {
@@ -42,6 +51,9 @@ public class EsArticleController extends BaseController {
 
     @Autowired
     private ElasticsearchRestTemplate restTemplate;
+
+    @Autowired
+    private FileConfig fileConfig;
 
     @Qualifier("elasticsearchClient")
     @Autowired
@@ -73,52 +85,6 @@ public class EsArticleController extends BaseController {
         return ResultBody.success(articleEntity.get());
     }
 
-//    @AllowDevPass
-//    @PostMapping("/findAll")
-//    public ResultBody test() throws IOException {
-//        SearchRequest searchRequest = new SearchRequest();
-//        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//
-//        QueryBuilder queryBuilder = QueryBuilders.matchQuery("content", "2");
-//
-//        HighlightBuilder highlightBuilder = new HighlightBuilder();
-//        highlightBuilder.field("content")
-//                // 设置前缀、后缀
-//                .preTags("<i>")
-//                .postTags("</i>")
-//                .fragmentSize(800000)
-//                .numOfFragments(0);
-//
-//        searchSourceBuilder.query(queryBuilder);
-//        searchSourceBuilder.highlighter(highlightBuilder);
-//        searchRequest.source(searchSourceBuilder);
-//
-//        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-//        SearchHit[] hits = searchResponse.getHits().getHits();
-//        List<ArticleEntity> articleEntities = new ArrayList<>();
-//        for (SearchHit hit : hits) {
-//            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-//            HighlightField productName = highlightFields.get("content");
-//            String newName = "";
-//            if (productName != null) {
-//                //获取该高亮字段的高亮信息
-//                Text[] fragments = productName.getFragments();
-//                //将前缀、关键词、后缀进行拼接
-//                for (Text fragment : fragments) {
-//                    newName += fragment;
-//                }
-//            }
-//            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-//            //将高亮后的值替换掉旧值
-//            sourceAsMap.put("content", newName);
-//            System.out.println("content: " + newName);
-//            String json = JSON.toJSONString(sourceAsMap);
-//            ArticleEntity articleEntity = JSON.parseObject(json, ArticleEntity.class);
-//            articleEntities.add(articleEntity);
-//        }
-//        return null;
-//    }
-
     @AllowDevPass
     @PostMapping("/findAll")
     public ResultBody findAll(@RequestBody ArticleDTO articleDTO) {
@@ -130,8 +96,8 @@ public class EsArticleController extends BaseController {
 
         HighlightBuilder.Field highlightBuilder = new HighlightBuilder
                 .Field("*")
-                .preTags("<highlight class='word-highlight'>")
-                .postTags("</highlight>")
+                .preTags("<hl>")
+                .postTags("</hl>")
                 .fragmentSize(800000);
 
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
@@ -169,6 +135,81 @@ public class EsArticleController extends BaseController {
 
         return getDataTable(articleEntities, (int) hits.getTotalHits());
     }
+
+    @MyLog("上传图片")
+    @PostMapping("/upload/img")
+    public ResultBody imgUpload(@RequestParam("files") MultipartFile files) {
+
+        String originalFilename = files.getOriginalFilename();
+        if (!StringUtils.hasText(originalFilename)) {
+            throw new MyException("图片不能为空");
+        }
+
+        String extensionName = originalFilename.substring(originalFilename.lastIndexOf("."));
+        if (!fileConfig.getExtensions().contains(extensionName)) {
+            throw new MyException("后缀名不符合规范，请检查后重试");
+        }
+
+        File pathFile = new File(fileConfig.getLocation());
+        if (!pathFile.exists()) {
+            pathFile.mkdirs();
+        }
+
+        UUID uuid = UUID.randomUUID();
+        File serverFile = new File(pathFile, uuid + "_" + files.getOriginalFilename());
+        try {
+            files.transferTo(serverFile);
+        } catch (IOException e) {
+            log.error("==上传图片异常==");
+            e.printStackTrace();
+        }
+        String imgPath = "/article/img/get/" + serverFile.getName();
+        return ResultBody.success(imgPath);
+    }
+
+    @AllowDevPass
+    @GetMapping("/img/get/{imgName}")
+    public void imgGet(@PathVariable String imgName) {
+        File imgFile = new File(fileConfig.getLocation() + File.separator + imgName);
+        if (!imgFile.exists()) {
+            log.error("图片不存在");
+        }
+
+        String extensionName = imgName.substring(imgName.lastIndexOf("."));
+        if (!fileConfig.getExtensions().contains(extensionName)) {
+            log.error("后缀名不符合规范，请检查后重试");
+        }
+
+        FileInputStream inputStream = null;
+        OutputStream outputStream = null;
+        HttpServletResponse response = ServletUtils.getResponse();
+        try {
+            response.setContentType("image/" + extensionName.substring(1));
+            inputStream = new FileInputStream(imgFile);
+            outputStream = ServletUtils.getResponse().getOutputStream();
+            int len = 0;
+            byte[] buffer = new byte[4096];
+            while ((len = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, len);
+            }
+            outputStream.flush();
+        } catch (FileNotFoundException e) {
+            log.error("图片不存在");
+            e.printStackTrace();
+        } catch (IOException e) {
+            log.error("图片获取io异常");
+            e.printStackTrace();
+        } finally {
+            try {
+                outputStream.close();
+                inputStream.close();
+            } catch (IOException e) {
+                log.error("图片获取流关闭异常");
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @MyLog("删除文章")
     @RequiresPermissions("article:operArticle:delete")

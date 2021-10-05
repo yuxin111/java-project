@@ -4,6 +4,9 @@ mode: demonstrate
 spring:
   application:
     name: my-java-project
+  servlet:
+    multipart:
+      max-file-size: 2MB
   thymeleaf:
     cache: false
   datasource:
@@ -24,5 +27,11 @@ mybatis:
 
 es:
   address: 127.0.0.1:9200
+
+img:
+  location: C:/Source/UploadImg
+  extensions:
+    - .jpg
+    - .png
 
 whitelist: 119.29.197.72
