@@ -6,6 +6,7 @@ import com.example.demo.common.annotation.MyLog;
 import com.example.demo.common.controller.BaseController;
 import com.example.demo.common.page.PageDomain;
 import com.example.demo.common.page.TableSupport;
+import com.example.demo.common.utils.ImageUtils;
 import com.example.demo.common.utils.ServletUtils;
 import com.example.demo.config.FileConfig;
 import com.example.demo.config.exception.MyException;
@@ -13,7 +14,9 @@ import com.example.demo.core.entity.ResultBody;
 import com.example.demo.elasticsearch.dao.ArticleRepository;
 import com.example.demo.elasticsearch.dto.ArticleDTO;
 import com.example.demo.elasticsearch.entity.ArticleEntity;
+import com.sun.imageio.plugins.common.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.*;
@@ -31,9 +34,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.List;
 
 /**
  * @Desc
@@ -159,6 +164,7 @@ public class EsArticleController extends BaseController {
         File serverFile = new File(pathFile, uuid + "_" + files.getOriginalFilename());
         try {
             files.transferTo(serverFile);
+            ImageUtils.compressImg(serverFile,0.2);
         } catch (IOException e) {
             log.error("==上传图片异常==");
             e.printStackTrace();

@@ -9,6 +9,9 @@ spring:
       max-file-size: 2MB
   thymeleaf:
     cache: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:59171/test?serverTimezone=GMT%2B8&useSSL=true
