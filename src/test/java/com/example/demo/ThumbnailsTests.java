@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.common.utils.ImageUtils;
-import net.coobird.thumbnailator.Thumbnails;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
