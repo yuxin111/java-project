@@ -33,6 +33,11 @@
             <optional>true</optional>
             <scope>true</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
         <!-- 配置文件处理器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

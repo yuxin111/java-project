@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.core.mapper.SingleInputTableMapper">
+
+<!--    <resultMap id="SingleInputResult" type="com.example.demo.core.entity.SingleInputTable">-->
+<!--        <result property="name" column="name"></result>-->
+<!--        <result property="mobile" column="mobile"></result>-->
+<!--        <result property="orgName" column="org_name"></result>-->
+<!--        <result property="taskName" column="task_name"></result>-->
+<!--        <result property="sceneName" column="scene_name"></result>-->
+<!--        <result property="callTimes" column="call_times"></result>-->
+<!--        <result property="reachedEndOfFlow" column="reached_end_of_flow"></result>-->
+<!--        <result property="hangUpByRejection" column="hang_up_by_rejection"></result>-->
+<!--        <result property="rounds" column="rounds"></result>-->
+<!--    </resultMap>-->
+
+    <select id="selectSingleInutTableList" parameterType="com.example.demo.core.entity.request.SingleInput" resultType="map">
+        select
+        s.name,
+        s.mobile,
+        s.org_name orgName,
+        s.task_name taskName,
+        s.scene_name sceneName,
+        s.call_times callTimes,
+        s.reached_end_of_flow reachedEndOfFlow,
+        s.hang_up_by_rejection hangUpByRejection,
+        s.rounds rounds,
+        <foreach item="item" index="index" collection="singleInputOutputList" separator=",">
+            (${item.calcExpress}) as params_${index}
+        </foreach>
+        from single_input_table s
+        <where>
+            <if test="singleInputSearch.name != null and singleInputSearch.name != ''">
+                and s.name like concat('%', #{singleInputSearch.name}, '%')
+            </if>
+            <if test="singleInputSearch.mobile != null and singleInputSearch.mobile != ''">
+                and s.mobile like concat('%', #{singleInputSearch.mobile}, '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
